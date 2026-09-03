@@ -6,6 +6,18 @@
    • Legacy SHA-256 / fallback hash support for existing accounts
    • Local admin account stored in localStorage (ak_users)
    • Token in sessionStorage (session) or localStorage (remember me)
+
+   TRUST MODEL — read before relying on this for anything sensitive:
+   This is a *client-side convenience gate*, not an access-control boundary.
+   requireAuth() only hides/redirects in the browser; the HTML of "protected"
+   pages is still served to anyone (those pages carry <meta robots=noindex> and
+   contain NO secrets in markup). Real protection lives server-side:
+     • HI dashboard data  → /api/hi/* requires the `HI_API_KEY` bearer token,
+       which the owner pastes into localStorage; it is never shipped in code.
+     • OTP login          → server/otp-server.js verifies the MSG91 OTP and
+       signs the session JWT; the client cannot forge `apiToken`.
+   Never render private data into a protected page's server response and assume
+   requireAuth() will keep it hidden.
 ====================================================== */
 
 const AUTH_USERS_KEY  = "ak_users";
@@ -256,6 +268,21 @@ function getAuthUser() {
   return token ? token.username : null;
 }
 
+/* True when the session came from a federated identity provider
+   (0dot.in, or the legacy "earthsphere" alias) rather than a local
+   username/password or OTP session. */
+function isFederatedSession(token) {
+  const t = token || getToken();
+  return !!t && (t.provider === "0dot" || t.provider === "earthsphere");
+}
+
+/* The 0dot @handle for the current session, or null. */
+function getSessionHandle() {
+  const t = getToken();
+  if (!t) return null;
+  return t.handle || t.hdi || (typeof t.username === "string" ? t.username : null);
+}
+
 function getAuthApiBase() {
   try {
     const candidates = [
@@ -336,10 +363,6 @@ async function signup(username, password) {
       return { ok: false, error: "A local admin account already exists on this device." };
     }
 
-    if (users.find(u => u.username === username)) {
-      return { ok: false, error: "That username is already taken." };
-    }
-
     const passwordSalt = makeSalt();
     const passwordHash = await hashPasswordAdvanced(password, passwordSalt);
     users.push({
@@ -405,8 +428,63 @@ function loginWithHDI(hdi) {
   return { ok: true };
 }
 
+/* ======================================================
+   "SIGN IN WITH 0DOT"  (0dot.in OAuth2 + PKCE)
+   The redirect flow is driven server-side (api/auth/0dot/*).
+   The server sets an HttpOnly session cookie; the client then
+   mirrors it into sessionStorage so the existing synchronous
+   isAuthenticated()/requireAuth() checks keep working.
+====================================================== */
+
+function startZeroDotLogin(next) {
+  const target = typeof next === "string" && next
+    ? next
+    : (window.location.pathname + window.location.search);
+  window.location.href = "/auth/0dot/start?next=" + encodeURIComponent(target);
+}
+
+function saveZeroDotToken(user, apiToken) {
+  const uname = user && user.username ? String(user.username) : "";
+  const token = JSON.stringify({
+    username: uname ? "@" + uname.replace(/^@/, "") : (user && user.name) || "0dot user",
+    handle: uname || null,
+    name: (user && user.name) || null,
+    avatar: (user && user.avatar) || null,
+    apiToken: apiToken || "",
+    provider: "0dot",
+    exp: user && user.exp ? user.exp * 1000 : Date.now() + SESSION_EXP_MS
+  });
+  try { sessionStorage.setItem(AUTH_TOKEN_KEY, token); } catch {}
+}
+
+/* Hydrate sessionStorage from the server session cookie (after the 0dot
+   redirect, or on a fresh tab that still has the cookie). Resolves to the
+   user object or null. */
+async function adoptServerSession() {
+  try {
+    const res = await fetch("/api/auth/session", { credentials: "same-origin" });
+    if (!res.ok) return null;
+    const data = await res.json().catch(() => ({}));
+    if (data && data.user) {
+      saveZeroDotToken(data.user, data.token || "");
+      return data.user;
+    }
+  } catch (_) {}
+  return null;
+}
+
 function logout() {
+  const wasServerSession = (() => {
+    const t = getToken();
+    return t && t.provider === "0dot";
+  })();
   clearToken();
+  if (wasServerSession) {
+    // Best-effort server cookie teardown; don't block the redirect on it.
+    try {
+      fetch("/api/auth/session", { method: "POST", credentials: "same-origin", keepalive: true }).catch(() => {});
+    } catch (_) {}
+  }
   window.location.replace("/pages/login.html");
 }
 
@@ -443,13 +521,18 @@ function initAuthButton() {
 ====================================================== */
 
 function requireAuth() {
-  if (!isAuthenticated()) {
+  if (typeof window === "undefined" || !window.location) return false;
+  if (isAuthenticated()) return true;
+
+  // Not authed — drop any stale token, hide the page, bounce to login.
+  clearToken();
+  try {
     document.documentElement.style.visibility = "hidden";
-    const next = encodeURIComponent(
-      window.location.pathname + window.location.search
-    );
-    window.location.replace("/pages/login.html?next=" + next);
-  }
+    document.documentElement.setAttribute("aria-hidden", "true");
+  } catch (_) {}
+  const next = encodeURIComponent(window.location.pathname + window.location.search);
+  window.location.replace("/pages/login.html?next=" + next);
+  return false;
 }
 
 if (document.readyState === "loading") {

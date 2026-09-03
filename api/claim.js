@@ -2,6 +2,9 @@
 
 const db = require("../lib/db");
 const { csrfGuard, send, badRequest, methodNotAllowed, preflight, CORS_HEADERS } = require("./_response");
+const { claim: claimLimit } = require("./_rate-limit");
+const { requireUrl, requireEmail, optionalString } = require("./_validate");
+const { readJsonBody } = require("./_body");
 
 // Mirrors migrations/006_hdi_claims.sql — Vercel deploys don't run migrations,
 // so ensure the table once per cold start instead of failing every claim.
@@ -62,23 +65,45 @@ module.exports = async (req, res) => {
   if (req.method === "OPTIONS") { preflight(res); return; }
   if (req.method !== "POST") { methodNotAllowed(res, "POST, OPTIONS"); return; }
   if (csrfGuard(req, res)) return;
+  if (!claimLimit(req, res)) return;
 
-  const { license_id, infringing_url, platform, violation_type, reporter_name, reporter_email, reporter_contact } = req.body ?? {};
-  if (!license_id || !infringing_url || !reporter_email) {
-    badRequest(res, "license_id, infringing_url, reporter_email required");
+  let raw;
+  try { raw = await readJsonBody(req, 65536); }
+  catch (err) { badRequest(res, err.message || "Invalid request"); return; }
+  let license_id, infringing_url, reporter_email, platform, violation_type, reporter_name, reporter_contact;
+  try {
+    license_id       = optionalString(raw.license_id, "license_id", 100);
+    infringing_url    = requireUrl(raw.infringing_url, "infringing_url");
+    reporter_email    = requireEmail(raw.reporter_email);
+    platform         = optionalString(raw.platform, "platform", 100);
+    violation_type   = optionalString(raw.violation_type, "violation_type", 50);
+    reporter_name    = optionalString(raw.reporter_name, "reporter_name", 200);
+    reporter_contact = optionalString(raw.reporter_contact, "reporter_contact", 200);
+  } catch (err) {
+    badRequest(res, err.message || "Invalid request");
+    return;
+  }
+  if (!license_id) {
+    badRequest(res, "license_id is required");
     return;
   }
 
   const dmca = buildDmca({ license_id, infringing_url, platform, violation_type, reporter_name, reporter_email });
 
-  await ensureTable();
-  await db.query(
-    `INSERT INTO hdi_claims
-       (license_id, infringing_url, platform, violation_type, reporter_name, reporter_email, reporter_contact, dmca_text)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
-    [license_id, infringing_url, platform ?? null, violation_type ?? null,
-     reporter_name ?? null, reporter_email, reporter_contact ?? null, dmca]
-  );
+  try {
+    await ensureTable();
+    await db.query(
+      `INSERT INTO hdi_claims
+         (license_id, infringing_url, platform, violation_type, reporter_name, reporter_email, reporter_contact, dmca_text)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
+      [license_id, infringing_url, platform || null, violation_type || null,
+       reporter_name || null, reporter_email, reporter_contact || null, dmca]
+    );
+  } catch (err) {
+    console.error(JSON.stringify({ level: "error", event: "claim_persist_failed", message: err.message }));
+    send(res, 502, { ok: false, error: "Could not record the claim right now — please retry.", code: "PERSIST_FAILED" });
+    return;
+  }
 
   send(res, 200, { ok: true, dmca });
 };

@@ -1,0 +1,23 @@
+# Never ship these to the Vercel static root (outputDirectory ".")
+# ── Test / coverage / CI ──────────────────────────────────────────────
+coverage/
+tests/
+playwright.config.js
+playwright-report/
+test-results/
+jest.config.js
+
+# ── Source control / tooling ──────────────────────────────────────────
+.github/
+.git/
+scripts/
+migrations/
+verify/tools/
+*.md
+
+# ── Local env / editor ────────────────────────────────────────────────
+.env
+.env.*
+.vscode/
+.idea/
+*.log

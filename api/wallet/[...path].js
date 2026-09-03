@@ -3,11 +3,12 @@
 const db = require("../../lib/db");
 const { ok, created, badRequest, unauthorized, notFound, methodNotAllowed, serverError, preflight } = require("../_response");
 const { rateLimit } = require("../_rate-limit");
+const { readJsonBody } = require("../_body");
 
 const MAX_SUPPLY = 99;
 
 // 60 req/min — personal dashboard; API key already guards access
-const walletLimit = rateLimit({ max: 60, windowMs: 60_000 });
+const walletLimit = rateLimit({ name: "wallet", max: 60, windowMs: 60_000 });
 
 function checkAuth(req, res) {
   const key = process.env.HI_API_KEY;
@@ -24,15 +25,6 @@ function parseSegments(url) {
   return segs.slice(walletIdx + 1);
 }
 
-async function readBody(req) {
-  return new Promise((resolve, reject) => {
-    let raw = "";
-    req.on("data", c => { raw += c; if (raw.length > 65536) { req.destroy(); reject(Object.assign(new Error("Body too large"), { status: 413 })); } });
-    req.on("end", () => { try { resolve(raw ? JSON.parse(raw) : {}); } catch (e) { reject(Object.assign(e, { status: 400, message: "Invalid JSON" })); } });
-    req.on("error", reject);
-  });
-}
-
 module.exports = async function handler(req, res) {
   if (req.method === "OPTIONS") { preflight(res, "GET, POST, PUT, DELETE, OPTIONS"); return; }
   if (!walletLimit(req, res)) return;
@@ -45,7 +37,7 @@ module.exports = async function handler(req, res) {
 
   let body = {};
   if (["POST", "PUT", "PATCH"].includes(method)) {
-    try { body = await readBody(req); }
+    try { body = await readJsonBody(req, 65536); }
     catch (e) { badRequest(res, e.message || "Invalid request"); return; }
   }
 

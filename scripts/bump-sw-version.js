@@ -17,13 +17,20 @@ const now = new Date();
 const pad = n => String(n).padStart(2, "0");
 const version = `v${now.getUTCFullYear()}${pad(now.getUTCMonth() + 1)}${pad(now.getUTCDate())}-${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}`;
 
-let content = fs.readFileSync(SW_PATH, "utf8");
-const updated = content.replace(/^const VERSION = ".*?";/m, `const VERSION = "${version}";`);
+const content = fs.readFileSync(SW_PATH, "utf8");
+const RE = /^const VERSION = "(.*?)";/m;
+const match = content.match(RE);
 
-if (updated === content) {
+if (!match) {
   console.error("ERROR: Could not find `const VERSION = \"...\";` in service-worker.js");
   process.exit(1);
 }
 
-fs.writeFileSync(SW_PATH, updated, "utf8");
+if (match[1] === version) {
+  // Already current (e.g. `build:sw` then `build` within the same minute) — not an error.
+  console.log(`service-worker.js VERSION already ${version} — no change`);
+  process.exit(0);
+}
+
+fs.writeFileSync(SW_PATH, content.replace(RE, `const VERSION = "${version}";`), "utf8");
 console.log(`service-worker.js VERSION → ${version}`);

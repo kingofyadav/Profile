@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <title>Login | Amit Ku Yadav HI Access</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Secure OTP login to HI Life OS — private access portal for Amit Ku Yadav." />
+  <meta name="description" content="Sign in with 0dot to access HI Life OS — the private space of Amit Ku Yadav." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://kingofyadav.in/pages/login.html" />
   <meta property="og:title" content="Login | Amit Ku Yadav HI Access" />
-  <meta property="og:description" content="Secure OTP login to HI Life OS — private access portal for Amit Ku Yadav." />
+  <meta property="og:description" content="Sign in with 0dot to access HI Life OS — the private space of Amit Ku Yadav." />
   <meta property="og:image" content="https://kingofyadav.in/og-image.png" />
   <meta property="og:url" content="https://kingofyadav.in/pages/login.html" />
   <meta property="og:type" content="website" />
   <link rel="icon" href="/favicon/favicon.ico" />
-  <link rel="stylesheet" href="/css/base.css?v=20260704" />
-  <link rel="stylesheet" href="/css/components.css?v=20260704" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260704" />
-  <link rel="stylesheet" href="/css/auth.css?v=20260704" />
+  <link rel="stylesheet" href="/css/base.css?v=20260903" />
+  <link rel="stylesheet" href="/css/components.css?v=20260903" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260903" />
+  <link rel="stylesheet" href="/css/auth.css?v=20260903" />
   <style>
     body.auth-page { padding-top: 76px !important; }
 
@@ -185,7 +185,7 @@
   <meta property="og:site_name" content="Amit Ku Yadav" />
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="Login | Amit Ku Yadav HI Access" />
-  <meta name="twitter:description" content="Secure OTP login to HI Life OS — private access portal for Amit Ku Yadav." />
+  <meta name="twitter:description" content="Sign in with 0dot to access HI Life OS — the private space of Amit Ku Yadav." />
   <meta name="twitter:image"       content="https://kingofyadav.in/og-image.png" />
   <meta name="twitter:creator"     content="@kingofyadav_in" />
   <meta name="twitter:site"        content="@kingofyadav_in" />
@@ -196,10 +196,10 @@
 
 <body class="theme-dark auth-page">
 
-<script src="/js/site-init.js?v=20260704"></script>
+<script src="/js/site-init.js?v=20260903"></script>
 
 <!-- Load auth module synchronously -->
-<script src="/js/auth.js?v=20260704"></script>
+<script src="/js/auth.js?v=20260903"></script>
 
 <!-- Redirect immediately if already logged in -->
 <script>
@@ -254,57 +254,47 @@ if (isAuthenticated()) {
 
 <main class="auth-shell" aria-labelledby="authTitle">
 
-<section class="auth-intro" aria-label="EarthSphere HDI login">
+<section class="auth-intro" aria-label="Sign in with 0dot">
   <p class="auth-kicker">Human Digital Identity</p>
-  <h1 id="authTitle">Login with your HDI.</h1>
+  <h1 id="authTitle">Sign in with 0dot.</h1>
   <p class="auth-copy">
-    Your EarthSphere identity is your key. Create your HDI once, use it everywhere.
+    Your 0dot identity is your key. One account for kingofyadav.in and everywhere else.
   </p>
 
-  <div class="auth-access-grid" aria-label="HDI features">
+  <div class="auth-access-grid" aria-label="How sign-in works">
     <div>
       <span>01</span>
-      <strong>Create HDI</strong>
-      <p>Sign up on EarthSphere to get your identity.</p>
+      <strong>Continue with 0dot</strong>
+      <p>You're sent to 0dot.in to approve access.</p>
     </div>
     <div>
       <span>02</span>
-      <strong>Copy HDI</strong>
-      <p>Find it on the HDI page and copy or click Open Profile.</p>
+      <strong>Approve once</strong>
+      <p>0dot shares only your public profile (name &amp; @handle).</p>
     </div>
     <div>
       <span>03</span>
-      <strong>Login Here</strong>
-      <p>Paste your HDI below to access your personal section.</p>
+      <strong>Back here, signed in</strong>
+      <p>You land straight in your personal section.</p>
     </div>
   </div>
 </section>
 
-<section class="auth-card" aria-label="EarthSphere HDI login">
+<section class="auth-card" aria-label="Sign in with 0dot">
 
-  <div class="auth-route-note" id="authRouteNote">🌍 EarthSphere HDI Login</div>
+  <div class="auth-route-note" id="authRouteNote">🌐 0dot Single Sign-On</div>
 
-  <!-- HDI PANEL (only login method) -->
   <div class="auth-hdi-intro">
-    <span class="auth-hdi-globe" aria-hidden="true">🌍</span>
-    <p>Enter your <strong>EarthSphere HDI</strong> to access your personal section.</p>
+    <span class="auth-hdi-globe" aria-hidden="true">🌐</span>
+    <p>Use your <strong>0dot.in</strong> account to access your personal section.</p>
   </div>
 
-  <form id="hdiForm" novalidate autocomplete="off">
-    <div class="auth-field">
-      <label for="hdi-input">Your HDI</label>
-      <input id="hdi-input" name="hdi" type="text"
-        placeholder="@name.x.1234"
-        autocomplete="off" spellcheck="false"
-        inputmode="text" required />
-    </div>
-    <button type="submit" class="auth-submit" id="hdiBtn">Login with HDI</button>
-    <div class="auth-status" id="hdiStatus" role="alert" aria-live="polite"></div>
-  </form>
+  <button type="button" class="auth-submit" id="zerodotBtn">Continue with 0dot</button>
+  <div class="auth-status" id="authStatus" role="alert" aria-live="polite"></div>
 
   <div class="auth-hdi-create">
-    <span>Don't have an HDI?</span>
-    <a href="http://localhost:5173" target="_blank" rel="noopener noreferrer">Create one on EarthSphere →</a>
+    <span>Don't have a 0dot account?</span>
+    <a href="https://0dot.in" target="_blank" rel="noopener noreferrer">Create one on 0dot.in →</a>
   </div>
 
 </section>
@@ -348,39 +338,53 @@ function safeNextPath() {
   } catch(e) { return fallback; }
 }
 
-/* ── Auto-fill HDI from URL param ── */
-(function() {
-  var params   = new URLSearchParams(window.location.search);
-  var hdiParam = params.get("hdi");
-  if (hdiParam) {
-    var inp = document.getElementById("hdi-input");
-    if (inp) { inp.value = decodeURIComponent(hdiParam); inp.focus(); }
-  } else {
-    var inp2 = document.getElementById("hdi-input");
-    if (inp2) inp2.focus();
-  }
-})();
+/* ── 0dot SSO flow ──
+   ?error=...     → the server bounced back with a message
+   ?connected=1   → the server set the session cookie; hydrate + go to next
+   otherwise      → wait for the user to click "Continue with 0dot"        */
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var btn    = document.getElementById("zerodotBtn");
 
-/* ── HDI FORM ── */
-document.getElementById("hdiForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  setStatus("hdiStatus", "", "");
-  var hdi = document.getElementById("hdi-input").value.trim();
-  if (!hdi) { setStatus("hdiStatus", "Enter your HDI.", "error"); return; }
-  setLoading("hdiBtn", true, "Login with HDI");
-  var result = loginWithHDI(hdi);
-  if (!result.ok) {
-    setStatus("hdiStatus", result.error, "error");
-    setLoading("hdiBtn", false, "Login with HDI");
+  var errParam = params.get("error");
+  if (errParam) {
+    setStatus("authStatus", decodeURIComponent(errParam), "error");
+  }
+
+  if (params.get("connected") === "1") {
+    setStatus("authStatus", "Signing you in…", "");
+    if (btn) setLoading("zerodotBtn", true, "Continue with 0dot");
+    (typeof adoptServerSession === "function"
+      ? adoptServerSession()
+      : Promise.resolve(null)
+    ).then(function (user) {
+      if (user) {
+        setStatus("authStatus", "✓ Signed in as " + (user.name || ("@" + (user.username || "0dot"))) + ". Redirecting…", "success");
+        setTimeout(function () { window.location.replace(safeNextPath()); }, 400);
+      } else {
+        if (btn) setLoading("zerodotBtn", false, "Continue with 0dot");
+        setStatus("authStatus", "Sign-in did not complete. Please try again.", "error");
+      }
+    });
     return;
   }
-  setStatus("hdiStatus", "✓ HDI accepted. Redirecting…", "success");
-  setTimeout(function() { window.location.replace(safeNextPath()); }, 500);
-});
+
+  if (btn) {
+    btn.addEventListener("click", function () {
+      setStatus("authStatus", "", "");
+      setLoading("zerodotBtn", true, "Continue with 0dot");
+      if (typeof startZeroDotLogin === "function") {
+        startZeroDotLogin(safeNextPath());
+      } else {
+        window.location.href = "/auth/0dot/start?next=" + encodeURIComponent(safeNextPath());
+      }
+    });
+  }
+})();
 </script>
 
-<script src="/js/nav.js?v=20260704" defer></script>
-<script src="/js/script.js?v=20260704" defer></script>
+<script src="/js/nav.js?v=20260903" defer></script>
+<script src="/js/script.js?v=20260903" defer></script>
 
 </body>
 </html>

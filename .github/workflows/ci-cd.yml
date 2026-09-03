@@ -104,6 +104,10 @@ jobs:
           VAPID_PUBLIC_KEY: ""
           VAPID_PRIVATE_KEY: ""
           VAPID_SUBJECT: mailto:ci@example.com
+          ZERODOT_ISSUER: https://0dot.in
+          ZERODOT_CLIENT_ID: ci-zerodot-client
+          ZERODOT_CLIENT_SECRET: ci-zerodot-secret
+          ZERODOT_REDIRECT_URI: http://localhost:4321/auth/0dot/callback
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4

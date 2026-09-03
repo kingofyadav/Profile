@@ -23,12 +23,12 @@
     <meta name="apple-mobile-web-app-title" content="HI Life OS" />
     <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
     <meta name="theme-color" content="#046A38" />
-    <link rel="stylesheet" href="/css/base.css?v=20260704" />
-    <link rel="stylesheet" href="/css/components.css?v=20260704" />
-    <link rel="stylesheet" href="/css/layout.css?v=20260704" />
-    <link rel="stylesheet" href="/css/personal.css?v=20260704" />
-    <link rel="stylesheet" href="/css/auth.css?v=20260704" />
-    <link rel="stylesheet" href="/css/hi-app.css?v=20260704" />
+    <link rel="stylesheet" href="/css/base.css?v=20260903" />
+    <link rel="stylesheet" href="/css/components.css?v=20260903" />
+    <link rel="stylesheet" href="/css/layout.css?v=20260903" />
+    <link rel="stylesheet" href="/css/personal.css?v=20260903" />
+    <link rel="stylesheet" href="/css/auth.css?v=20260903" />
+    <link rel="stylesheet" href="/css/hi-app.css?v=20260903" />
     <style>
       /* ── EarthSphere HDI Sync ── */
       .es-sync-bar {
@@ -216,8 +216,8 @@
   </head>
 
   <body class="theme-dark personal-page">
-    <script src="/js/auth.js?v=20260704"></script>
-    <script src="/js/site-init.js?v=20260704"></script>
+    <script src="/js/auth.js?v=20260903"></script>
+    <script src="/js/site-init.js?v=20260903"></script>
     <script>
       requireAuth()
       document.documentElement.style.visibility = ''
@@ -254,16 +254,16 @@
 ════════════════════════════════════════════ -->
     <main class="site-main personal-main" id="main-content">
 
-      <!-- ── EarthSphere HDI Sync Banner ── -->
-      <div class="es-sync-bar" id="esSyncBar" hidden aria-label="EarthSphere HDI connection status">
+      <!-- ── 0dot Identity Sync Banner ── -->
+      <div class="es-sync-bar" id="esSyncBar" hidden aria-label="0dot identity connection status">
         <div class="es-sync-left">
           <span class="es-sync-pulse" aria-hidden="true"></span>
-          <span class="es-sync-wordmark">🌍 EarthSphere</span>
+          <span class="es-sync-wordmark">🌐 0dot</span>
           <code class="es-sync-hdi" id="esSyncHdi"></code>
-          <span class="es-sync-chip">HDI Connected</span>
+          <span class="es-sync-chip">Identity Connected</span>
         </div>
-        <a class="es-sync-open" href="http://localhost:5173" target="_blank" rel="noopener noreferrer">
-          Open EarthSphere ↗
+        <a class="es-sync-open" id="esSyncOpen" href="https://0dot.in" target="_blank" rel="noopener noreferrer">
+          Open 0dot ↗
         </a>
       </div>
 
@@ -277,8 +277,8 @@
             <div>
               <p class="hic-id-label">Human Digital Identity</p>
               <div class="hic-id-code" id="hicHdiCode">Loading…</div>
-              <div class="hic-id-chain" aria-label="Identity chain: EarthSphere → kingofyadav.in → Wallet → RupeeCoin">
-                <span class="hic-chain-node hic-chain-es">🌍 EarthSphere</span>
+              <div class="hic-id-chain" aria-label="Identity chain: 0dot → kingofyadav.in → Wallet → RupeeCoin">
+                <span class="hic-chain-node hic-chain-es">🌐 0dot</span>
                 <span class="hic-chain-arrow" aria-hidden="true">→</span>
                 <span class="hic-chain-node hic-chain-profile">🔗 kingofyadav.in</span>
                 <span class="hic-chain-arrow" aria-hidden="true">→</span>
@@ -291,7 +291,7 @@
           <div class="hic-id-actions">
             <button class="hic-btn" id="hicCopyHdi">Copy HDI</button>
             <a class="hic-btn hic-btn--outline" href="/pages/hi-license.html">License →</a>
-            <a class="hic-btn hic-btn--outline" href="http://localhost:5173" target="_blank" rel="noopener noreferrer">EarthSphere ↗</a>
+            <a class="hic-btn hic-btn--outline" id="hicOpen0dot" href="https://0dot.in" target="_blank" rel="noopener noreferrer">0dot ↗</a>
           </div>
         </div>
 
@@ -1034,34 +1034,44 @@
     <!-- ════════════════════════════════════════════
      SCRIPTS  (storage first — all else deferred)
 ════════════════════════════════════════════ -->
-    <script src="/js/footer.js?v=20260704" defer></script>
-    <script src="/js/nav.js?v=20260704" defer></script>
-    <script src="/js/script.js?v=20260704" defer></script>
-    <script src="/js/hi-storage.js?v=20260704" defer></script>
-    <script src="/js/hi-api.js?v=20260704" defer></script>
-    <script src="/js/hi-identity-crypto.js?v=20260704" defer></script>
-    <script src="/js/hi-app.js?v=20260704" defer></script>
-    <script src="/js/hi-personal.js?v=20260704" defer></script>
-    <script src="/js/hi-professional.js?v=20260704" defer></script>
-    <script src="/js/hi-social.js?v=20260704" defer></script>
-    <script src="/js/hi-context.js?v=20260704" defer></script>
-    <script src="/js/hi-search.js?v=20260704" defer></script>
-    <script src="/js/hi-assistant.js?v=20260704" defer></script>
-    <script src="/js/hi-license.js?v=20260704" defer></script>
-    <script src="/js/personal-data.js?v=20260704" defer></script>
+    <script src="/js/footer.js?v=20260903" defer></script>
+    <script src="/js/nav.js?v=20260903" defer></script>
+    <script src="/js/script.js?v=20260903" defer></script>
+    <script src="/js/hi-storage.js?v=20260903" defer></script>
+    <script src="/js/hi-api.js?v=20260903" defer></script>
+    <script src="/js/hi-identity-crypto.js?v=20260903" defer></script>
+    <script src="/js/hi-app.js?v=20260903" defer></script>
+    <script src="/js/hi-personal.js?v=20260903" defer></script>
+    <script src="/js/hi-professional.js?v=20260903" defer></script>
+    <script src="/js/hi-social.js?v=20260903" defer></script>
+    <script src="/js/hi-context.js?v=20260903" defer></script>
+    <script src="/js/hi-search.js?v=20260903" defer></script>
+    <script src="/js/hi-assistant.js?v=20260903" defer></script>
+    <script src="/js/hi-license.js?v=20260903" defer></script>
+    <script src="/js/personal-data.js?v=20260903" defer></script>
 
     <script>
       var _u = document.getElementById('authUserDisplay')
       if (_u) _u.textContent = getAuthUser() || ''
 
-      /* ── EarthSphere sync banner ── */
+      /* ── 0dot / EarthSphere sync banner ── */
       ;(function () {
-        var _tok   = typeof getToken === 'function' ? getToken() : null
-        if (!_tok || _tok.provider !== 'earthsphere') return
+        var _tok = typeof getToken === 'function' ? getToken() : null
+        var _fed = typeof isFederatedSession === 'function'
+          ? isFederatedSession(_tok)
+          : (!!_tok && _tok.provider === 'earthsphere')
+        if (!_fed) return
         var _bar   = document.getElementById('esSyncBar')
         var _hdiEl = document.getElementById('esSyncHdi')
+        var _handle = _tok.handle ? String(_tok.handle).replace(/^@/, '') : ''
         if (_bar)   _bar.hidden = false
-        if (_hdiEl) _hdiEl.textContent = _tok.hdi || _tok.username || ''
+        if (_hdiEl) _hdiEl.textContent = _handle ? '@' + _handle : (_tok.hdi || _tok.username || '')
+        if (_handle) {
+          ['esSyncOpen', 'hicOpen0dot'].forEach(function (id) {
+            var a = document.getElementById(id)
+            if (a) a.href = 'https://0dot.in/@' + _handle
+          })
+        }
       })()
 
       var _lb = document.getElementById('logoutBtn')
@@ -1130,10 +1140,15 @@
         } else {
           openIdentityFromHash()
         }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', hiApiInit)
+        // hi-api.js is deferred, so hiApiInit isn't defined yet at parse time.
+        // All deferred scripts finish before DOMContentLoaded, so wait for it.
+        function _runHiApiInit() {
+          if (typeof hiApiInit === 'function') hiApiInit()
+        }
+        if (typeof hiApiInit === 'function') {
+          _runHiApiInit()
         } else {
-          hiApiInit()
+          document.addEventListener('DOMContentLoaded', _runHiApiInit)
         }
       })()
 
@@ -1740,14 +1755,14 @@
           }
 
           /* Show wizard on #setup hash or if no HDI.
-             Skip entirely when session is from EarthSphere HDI. */
+             Skip entirely when the session is from a federated provider (0dot). */
           function maybeShowWizard() {
             var hdi = '';
             try { hdi = localStorage.getItem('hi_hdi_code') || ''; } catch {}
             if (typeof getToken === 'function') {
               var _t = getToken();
-              if (_t && _t.provider === 'earthsphere') return; /* EarthSphere session — no wizard */
-              if (_t && _t.hdi && !hdi) hdi = _t.hdi;
+              if (typeof isFederatedSession === 'function' ? isFederatedSession(_t) : (_t && _t.provider === 'earthsphere')) return; /* federated session — no wizard */
+              if (_t && (_t.handle || _t.hdi) && !hdi) hdi = _t.handle ? '@' + String(_t.handle).replace(/^@/, '') : _t.hdi;
             }
             var isSetupHash = window.location.hash === '#setup' || window.location.hash === '#create-identity';
             if (!hdi || isSetupHash) hiWizShow();
@@ -1761,8 +1776,8 @@
             try { hdi = localStorage.getItem('hi_hdi_code') || ''; } catch {}
             if (!hdi && typeof getToken === 'function') {
               var _t = getToken();
-              if (_t && _t.provider === 'earthsphere') { clearInterval(timer); return; }
-              if (_t && _t.hdi) hdi = _t.hdi;
+              if (typeof isFederatedSession === 'function' ? isFederatedSession(_t) : (_t && _t.provider === 'earthsphere')) { clearInterval(timer); return; }
+              if (_t && (_t.handle || _t.hdi)) hdi = _t.handle ? '@' + String(_t.handle).replace(/^@/, '') : _t.hdi;
             }
             if (hdi || tries > 25) {
               clearInterval(timer);
@@ -1784,7 +1799,7 @@
     </script>
 
     <script
-      src="/api-static/jarvis-widget.js?v=20260704"
+      src="/api-static/jarvis-widget.js?v=20260903"
       data-endpoint="/api/jarvis-chat"
       data-fallback-endpoint="/api/jarvis-chat"
       data-live-endpoint="wss://jarvis.kingofyadav.in/api/ws/public"

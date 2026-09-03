@@ -194,11 +194,13 @@ async function hiRenderHeroIdentity(identity) {
   const hdiEl   = document.getElementById("hiHeroHDI");
   const editBtn = document.getElementById("hiHeroEditIdentityBtn");
 
-  /* Read EarthSphere session — auth.js is always loaded before hi-app.js */
+  /* Read the federated (0dot / legacy EarthSphere) session — auth.js is
+     always loaded before hi-app.js */
   const _tok   = (typeof getToken === "function") ? getToken() : null;
-  const _esHdi = (_tok?.provider === "earthsphere") ? (_tok.hdi || _tok.username || null) : null;
+  const _fed   = (typeof isFederatedSession === "function") ? isFederatedSession(_tok) : (_tok?.provider === "earthsphere");
+  const _esHdi = _fed ? (_tok.handle ? "@" + String(_tok.handle).replace(/^@/, "") : (_tok.hdi || _tok.username || null)) : null;
 
-  const name       = identity?.name ?? (_esHdi ? _esHdi.replace(/^@/, "").split(".")[0] : "Amit Ku Yadav");
+  const name       = identity?.name ?? (_tok?.name) ?? (_esHdi ? _esHdi.replace(/^@/, "").split(".")[0] : "Amit Ku Yadav");
   const displayHdi = identity?.hdi  ?? _esHdi ?? "HDI pending";
 
   if (title)  title.textContent  = `Life OS for ${name}`;
@@ -207,7 +209,7 @@ async function hiRenderHeroIdentity(identity) {
     hdiEl.textContent = displayHdi;
     if (_esHdi && !identity?.hdi) {
       hdiEl.classList.add("hdi-earthsphere");
-      hdiEl.title = "Synced from EarthSphere";
+      hdiEl.title = _tok && _tok.provider === "earthsphere" ? "Synced from EarthSphere" : "Synced from 0dot";
     } else {
       hdiEl.classList.remove("hdi-earthsphere");
       hdiEl.title = "";

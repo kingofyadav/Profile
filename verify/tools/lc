@@ -7,15 +7,20 @@ set -euo pipefail
 BOARD_URL="https://kingofyadav.in/pages/live-class.html"
 API_BASE="https://kingofyadav.in/api"
 TOKEN_FILE="$HOME/.lc_token"
-DEFAULT_TOKEN="nlTklzKW1QEkYOHExlEV1kDMdM5WX5Dfp2dl0Bqa"
 
 # ── Room & token resolution ───────────────────────────────────────────────────
+# The teacher token is a live secret — it is NEVER hardcoded here. Provide it via
+# the LIVE_CLASS_TOKEN env var or ~/.lc_token (chmod 600). This file is published
+# as a static asset, so anything written into it is world-readable.
 ROOM="${LIVE_CLASS_ROOM:-main}"
 if [[ "${1:-}" == "--room" ]]; then shift; ROOM="${1:-main}"; shift; fi
 
 TOKEN="${LIVE_CLASS_TOKEN:-}"
 if [[ -z "$TOKEN" && -f "$TOKEN_FILE" ]]; then TOKEN=$(cat "$TOKEN_FILE" | tr -d '[:space:]'); fi
-if [[ -z "$TOKEN" ]]; then TOKEN="$DEFAULT_TOKEN"; fi
+if [[ -z "$TOKEN" ]]; then
+  echo "  No teacher token. Set LIVE_CLASS_TOKEN or write it to $TOKEN_FILE (chmod 600)." >&2
+  exit 1
+fi
 
 API="$API_BASE/live-class?room=$ROOM"
 RAILWAY_API="https://jarvis.kingofyadav.in/api/live-class"

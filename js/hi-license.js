@@ -474,7 +474,7 @@ function hiRenderHDICertificateMarkup(cert) {
       `<div class="hi-pro-cert-block"><span>Issued By</span><strong>${hiLicenseEsc(HI_LICENSE_SITE)}</strong><code>HI Identity Protocol</code></div>` +
       `<div class="hi-pro-cert-block"><span>Issued At</span><strong>${hiLicenseEsc(cert.issuedAtLabel)}</strong><code>Asia/Kolkata</code></div>` +
       `<div class="hi-pro-cert-block"><span>Location</span><strong>${hiLicenseEsc(identity.location ?? "Not set")}</strong><code>Owner declared</code></div>` +
-      `<div class="hi-pro-cert-block"><span>Contact</span><strong>${hiLicenseEsc(identity.email ?? ((identity.phoneCode ?? "") + " " + (identity.phone ?? "")).trim() || "Not set")}</strong><code>Owner declared</code></div>` +
+      `<div class="hi-pro-cert-block"><span>Contact</span><strong>${hiLicenseEsc((identity.email ?? ((identity.phoneCode ?? "") + " " + (identity.phone ?? "")).trim()) || "Not set")}</strong><code>Owner declared</code></div>` +
       `<div class="hi-pro-cert-block"><span>Total Claims</span><strong>${hiLicenseEsc(cert.claimCount)}</strong><code>Linked licenses</code></div>` +
     `</section>` +
     (identity.mission ? `<section class="hi-hdi-mission"><span>Mission</span><p>${hiLicenseEsc(identity.mission)}</p></section>` : "") +
