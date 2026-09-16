@@ -124,7 +124,7 @@ describe("GET /auth/0dot/start", () => {
     const res = makeRes();
     await freshStart(makeReq("GET"), res);
     expect(res.statusCode).toBe(302);
-    expect(res.getHeader("location")).toMatch(/\/pages\/login\.html\?error=/);
+    expect(res.getHeader("location")).toMatch(/\/pages\/login\?error=/);
     process.env.ZERODOT_CLIENT_ID = saved;
     jest.resetModules();
   });
@@ -196,7 +196,7 @@ describe("GET /auth/0dot/callback", () => {
     expect(meCall.opts.headers.Authorization).toBe("Bearer AT");
 
     expect(res.statusCode).toBe(302);
-    expect(res.getHeader("location")).toBe("/pages/login.html?connected=1&next=%2Fpages%2Fpersonal.html");
+    expect(res.getHeader("location")).toBe("/pages/login?connected=1&next=%2Fpages%2Fpersonal.html");
 
     const session = jwt.verify(cookieValue(getSetCookie(res, SESSION_COOKIE)), process.env.AUTH_JWT_SECRET);
     expect(session.typ).toBe("hi_session");

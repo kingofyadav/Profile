@@ -493,7 +493,8 @@ function authLoginUrl() {
   const next = encodeURIComponent(
     window.location.pathname + window.location.search
   );
-  return "/pages/login.html?next=" + next;
+  // Clean path (no .html) so Vercel's cleanUrls redirect doesn't strip ?next=.
+  return "/pages/login?next=" + next;
 }
 
 function initAuthButton() {
@@ -532,7 +533,7 @@ function requireAuth() {
     document.documentElement.setAttribute("aria-hidden", "true");
   } catch (_) {}
   const next = encodeURIComponent(window.location.pathname + window.location.search);
-  window.location.replace("/pages/login.html?next=" + next);
+  window.location.replace("/pages/login?next=" + next);
   return false;
 }
 

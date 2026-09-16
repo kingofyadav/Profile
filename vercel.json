@@ -1,6 +1,6 @@
 {
   "outputDirectory": ".",
-  "buildCommand": "npm run build && rm -rf scripts",
+  "buildCommand": "npm run build && ( [ \"$VERCEL_ENV\" = \"development\" ] || rm -rf scripts )",
   "rewrites": [
     { "source": "/verify/:id", "destination": "/verify" },
     { "source": "/claim/:id",  "destination": "/claim"  },
