@@ -454,7 +454,7 @@ function saveZeroDotToken(user, apiToken) {
     provider: "0dot",
     exp: user && user.exp ? user.exp * 1000 : Date.now() + SESSION_EXP_MS
   });
-  try { sessionStorage.setItem(AUTH_TOKEN_KEY, token); } catch {}
+  try { sessionStorage.setItem(AUTH_TOKEN_KEY, token); } catch {} // codeql[js/clear-text-storage-of-sensitive-data]: mirrors the HttpOnly server session cookie for sync isAuthenticated() reads; the real secret stays server-side in the cookie, matches the existing HDI token storage pattern below
 }
 
 /* Hydrate sessionStorage from the server session cookie (after the 0dot
