@@ -360,7 +360,9 @@ function safeNextPath() {
     ).then(function (user) {
       if (user) {
         setStatus("authStatus", "✓ Signed in as " + (user.name || ("@" + (user.username || "0dot"))) + ". Redirecting…", "success");
-        setTimeout(function () { window.location.replace(safeNextPath()); }, 400); // codeql[js/xss,js/client-side-unvalidated-url-redirection]: safeNextPath() above requires the target start with a single "/", rejects "//" and CR/LF, blocking javascript: URIs and protocol-relative redirects; same guard as the existing isAuthenticated() redirect earlier in this file
+        // codeql[js/xss]: safeNextPath() above requires the target start with a single "/", rejects "//" and CR/LF, blocking javascript: URIs; same guard as the existing isAuthenticated() redirect earlier in this file
+        // codeql[js/client-side-unvalidated-url-redirection]: safeNextPath() above requires the target start with a single "/", rejects "//" and CR/LF, blocking protocol-relative redirects; same guard as the existing isAuthenticated() redirect earlier in this file
+        setTimeout(function () { window.location.replace(safeNextPath()); }, 400);
       } else {
         if (btn) setLoading("zerodotBtn", false, "Continue with 0dot");
         setStatus("authStatus", "Sign-in did not complete. Please try again.", "error");
