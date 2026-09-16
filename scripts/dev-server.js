@@ -4,7 +4,7 @@ const http = require("http");
 const fs   = require("fs");
 const path = require("path");
 
-const PORT = Number(process.env.DEV_PORT || 3000);
+const PORT = Number(process.env.PORT || process.env.DEV_PORT || 3000);
 const ROOT = path.resolve(__dirname, "..");
 
 const MIME = {

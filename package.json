@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node scripts/dev-server.js",
+    "dev:static": "node scripts/dev-server.js",
     "dev:api": "node server/otp-server.js",
     "tunnel": "ngrok start site --config ~/snap/ngrok/common/.config/ngrok/ngrok.yml",
     "tunnel:all": "ngrok start site api --config ~/snap/ngrok/common/.config/ngrok/ngrok.yml",
