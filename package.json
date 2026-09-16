@@ -47,13 +47,14 @@
     ],
     "collectCoverageFrom": [
       "api/**/*.js",
+      "lib/auth-handlers/**/*.js",
       "!api/_*.js"
     ],
     "coverageThreshold": {
       "global": {
         "lines": 60
       },
-      "./api/auth/**": {
+      "./lib/auth-handlers/**": {
         "lines": 80
       },
       "./api/wallet/**": {

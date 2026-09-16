@@ -1,10 +1,11 @@
 {
   "outputDirectory": ".",
+  "buildCommand": "npm run build && rm -rf scripts",
   "rewrites": [
     { "source": "/verify/:id", "destination": "/verify" },
     { "source": "/claim/:id",  "destination": "/claim"  },
-    { "source": "/auth/0dot/start",    "destination": "/api/auth/0dot/start"    },
-    { "source": "/auth/0dot/callback", "destination": "/api/auth/0dot/callback" }
+    { "source": "/auth/0dot/start",    "destination": "/api/auth/[...path]?...path=0dot-start"    },
+    { "source": "/auth/0dot/callback", "destination": "/api/auth/[...path]?...path=0dot-callback" }
   ],
   "headers": [
     {

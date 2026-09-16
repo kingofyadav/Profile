@@ -12,9 +12,9 @@ process.env.ZERODOT_REDIRECT_URI = "https://kingofyadav.in/auth/0dot/callback";
 
 const jwt = require("../../api/_jwt");
 const { parseCookies, serializeCookie } = require("../../api/_cookies");
-const startHandler = require("../../api/auth/0dot/start");
-const callbackHandler = require("../../api/auth/0dot/callback");
-const sessionHandler = require("../../api/auth/session");
+const startHandler = require("../../lib/auth-handlers/zerodot-start");
+const callbackHandler = require("../../lib/auth-handlers/zerodot-callback");
+const sessionHandler = require("../../lib/auth-handlers/session");
 
 const { FLOW_COOKIE } = startHandler;
 const { SESSION_COOKIE } = callbackHandler;
@@ -120,7 +120,7 @@ describe("GET /auth/0dot/start", () => {
     const saved = process.env.ZERODOT_CLIENT_ID;
     jest.resetModules();
     delete process.env.ZERODOT_CLIENT_ID;
-    const freshStart = require("../../api/auth/0dot/start");
+    const freshStart = require("../../lib/auth-handlers/zerodot-start");
     const res = makeRes();
     await freshStart(makeReq("GET"), res);
     expect(res.statusCode).toBe(302);

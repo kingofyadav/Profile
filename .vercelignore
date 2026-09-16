@@ -8,9 +8,14 @@ test-results/
 jest.config.js
 
 # ── Source control / tooling ──────────────────────────────────────────
+# scripts/ is NOT listed here: npm run build (build:tokens, build:sw,
+# build:blog, build:css, build:sitemap, build:version) requires it to
+# be present during the Vercel build step. .vercelignore is applied
+# before the build runs, so excluding it here would break the build
+# itself. It's removed from the served output afterward instead, by
+# vercel.json's buildCommand ("npm run build && rm -rf scripts").
 .github/
 .git/
-scripts/
 migrations/
 verify/tools/
 *.md
