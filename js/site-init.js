@@ -36,10 +36,13 @@
   });
 })();
 
-// Auth bar wiring — reveals user chip if session is active
+// Auth bar wiring — reveals user chip if session is active.
+// auth.js is deferred, so it is NOT yet loaded when this file runs at the top of
+// <body>. Do the check inside DOMContentLoaded, by which point deferred scripts
+// have executed.
 (function () {
-  if (typeof isAuthenticated !== "function" || !isAuthenticated()) return;
   document.addEventListener("DOMContentLoaded", function () {
+    if (typeof isAuthenticated !== "function" || !isAuthenticated()) return;
     var bar = document.getElementById("homeAuthBar");
     if (bar) bar.hidden = false;
     var el = document.getElementById("authUserDisplay");

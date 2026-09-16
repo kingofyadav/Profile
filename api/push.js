@@ -2,6 +2,7 @@
 
 const webpush = require("web-push");
 const { csrfGuard } = require("./_response");
+const { push: pushLimit } = require("./_rate-limit");
 const db      = require("../lib/db");
 
 const TOKEN         = process.env.LIVE_CLASS_TOKEN;
@@ -23,7 +24,10 @@ module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") return res.status(204).end();
-  if (req.method !== "GET" && csrfGuard(req, res)) return;
+  if (req.method !== "GET") {
+    if (csrfGuard(req, res)) return;
+    if (!pushLimit(req, res)) return;
+  }
 
   if (req.method === "GET") {
     return res.json({ ok: true, publicKey: VAPID_PUBLIC ?? null });

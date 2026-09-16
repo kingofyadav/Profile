@@ -606,7 +606,7 @@ function initProFooter() {
         { href: "/wallet/vault.html", label: "HI Vault", note: "Protected digital backup" },
         { href: "/wallet/merchant.html", label: "Merchant", note: "Payment and merchant layer" },
         { href: "/wallet/marketplace/", label: "Marketplace", note: "Service economy gateway" },
-        { href: "/pages/login.html?next=%2Fpages%2Fpersonal.html", label: "Login / Setup", note: "Access or create workspace" },
+        { href: "/pages/login?next=%2Fpages%2Fpersonal.html", label: "Login / Setup", note: "Access or create workspace" },
         { href: "/wallet/", label: "Digital Coin", note: "Public coin movement page" },
         { href: "/wallet/coin.html", label: "HI Coin", note: "Coin concept and roadmap" }
       ]

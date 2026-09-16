@@ -10,8 +10,8 @@ jest.mock("../../api/auth/_proxy", () => ({
 }));
 
 const { proxyJson } = require("../../api/auth/_proxy");
-const requestOtp = require("../../api/auth/request-otp");
-const verifyOtp  = require("../../api/auth/verify-otp");
+const requestOtp = require("../../lib/auth-handlers/request-otp");
+const verifyOtp  = require("../../lib/auth-handlers/verify-otp");
 
 function makeRes() {
   const h = {};

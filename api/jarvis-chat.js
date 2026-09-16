@@ -2,6 +2,7 @@
 
 const { tooManyRequests, methodNotAllowed, badRequest, serverError } = require("./_response");
 const { chat: chatLimit } = require("./_rate-limit");
+const { readJsonBody } = require("./_body");
 
 const MAX_BODY_BYTES = 65536;
 const MAX_HISTORY = 6;
@@ -99,31 +100,6 @@ function send(res, status, payload) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store, max-age=0");
   res.end(JSON.stringify(payload));
-}
-
-function readBody(req) {
-  return new Promise((resolve, reject) => {
-    let raw = "";
-    req.on("data", chunk => {
-      raw += chunk;
-      if (raw.length > MAX_BODY_BYTES) {
-        const err = new Error("Request body too large");
-        err.status = 413;
-        reject(err);
-        req.destroy();
-      }
-    });
-    req.on("end", () => {
-      try {
-        resolve(raw ? JSON.parse(raw) : {});
-      } catch (err) {
-        err.status = 400;
-        err.message = "Invalid JSON";
-        reject(err);
-      }
-    });
-    req.on("error", reject);
-  });
 }
 
 function normalizeBackendBase(req) {
@@ -232,7 +208,7 @@ module.exports = async function handler(req, res) {
 
   let body;
   try {
-    body = await readBody(req);
+    body = await readJsonBody(req, MAX_BODY_BYTES);
   } catch (err) {
     badRequest(res, err.message || "Invalid request");
     return;

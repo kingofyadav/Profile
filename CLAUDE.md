@@ -9,9 +9,12 @@ Personal production site for Amit Ku Yadav. Vanilla HTML/CSS/JS frontend, Node.j
 ```bash
 cp .env.example .env          # fill real values
 npm install
-npm start                     # OTP API on :5050
-# Open index.html in browser or use Live Server
+vercel dev                    # static site + api/ serverless functions + rewrites, on :3000
 ```
+
+`vercel dev` is the only local server that runs `api/*.js` (jarvis-chat, auth/0dot/*, wallet, etc.) and applies `vercel.json` rewrites — it replicates the Vercel deployment. Don't use `python3 -m http.server` or open `index.html` directly for anything touching `/api/*`; those return raw files only, so any POST to an API route 404s or 501s.
+
+For static-only work with no API calls, `npm run dev:static` (plain file server, no `api/` support) is a lighter option. The OTP server (`npm start`, port 5050) is the standalone Railway service — normally only needed when testing it in isolation.
 
 Build pipeline:
 ```bash

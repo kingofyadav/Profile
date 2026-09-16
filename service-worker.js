@@ -6,7 +6,7 @@
    Author: Amit Ku Yadav
 ====================================================== */
 
-const VERSION = "v20260703-1659";
+const VERSION = "v20260916-1909";
 const STATIC_CACHE = `ak-static-${VERSION}`;
 const DYNAMIC_CACHE = `ak-dynamic-${VERSION}`;
 const MAX_DYNAMIC_ITEMS = 80;
@@ -52,7 +52,15 @@ const STATIC_ASSETS = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then(cache => cache.addAll(STATIC_ASSETS))
+      // Per-URL so one 404 (or a cleanUrls redirect) can't fail the whole
+      // install and silently disable offline support site-wide.
+      .then(cache => Promise.allSettled(
+        STATIC_ASSETS.map(url =>
+          cache.add(new Request(url, { cache: "reload" })).catch(err => {
+            console.warn("[sw] skipped precache:", url, err && err.message);
+          })
+        )
+      ))
       .then(() => self.skipWaiting())
   );
 });
@@ -136,11 +144,10 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  /* External requests */
+  /* External requests — pass through; never substitute an HTML shell for a
+     failed script/font/xhr (that only produces confusing MIME errors). */
   if (url.origin !== location.origin) {
-    event.respondWith(
-      fetch(request).catch(() => caches.match("/offline.html"))
-    );
+    event.respondWith(fetch(request).catch(() => Response.error()));
   }
 });
 

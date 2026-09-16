@@ -3,11 +3,45 @@
 const { Pool } = require("pg");
 const { loadEnv } = require("../../lib/env");
 const { rateLimit } = require("../_rate-limit");
-const { requireString, optionalString, requireUrl } = require("../_validate");
-const { logError, withLogging } = require("../_logger");
+const { requireUrl } = require("../_validate");
+
+// ── SSRF guard ────────────────────────────────────────────────────────────────
+// Only these public social hosts may be fetched server-side. Anything else
+// (internal hostnames, cloud metadata IPs, link-local, raw IP literals) is
+// rejected before a request goes out.
+const _SOCIAL_HOST_ALLOWLIST = [
+  "github.com", "api.github.com",
+  "youtube.com", "youtu.be",
+  "twitter.com", "x.com",
+  "linkedin.com",
+  "instagram.com",
+  "facebook.com",
+  "threads.net",
+  "medium.com",
+  "dev.to",
+  "t.me",
+  "mastodon.social",
+];
+
+function _assertFetchableSocialUrl(rawUrl) {
+  let u;
+  try { u = new URL(String(rawUrl)); }
+  catch { throw new Error("profile_url is not a valid URL"); }
+  if (u.protocol !== "https:") throw new Error("profile_url must be https");
+  const host = u.hostname.toLowerCase();
+  if (/^[0-9.]+$/.test(host) || host.includes(":")) throw new Error("profile_url host not allowed");
+  const ok = _SOCIAL_HOST_ALLOWLIST.some(h => host === h || host.endsWith("." + h));
+  if (!ok) throw new Error(`profile_url host not allowed: ${host}`);
+  return u.toString();
+}
 
 // ── Social profile bio-code checker ───────────────────────────────────────────
 async function _checkSocialProfile(platform, profileUrl, verifyCode) {
+  let safeUrl;
+  try { safeUrl = _assertFetchableSocialUrl(profileUrl); }
+  catch (e) { return { verified: false, reason: e.message }; }
+  profileUrl = safeUrl;
+
   const GITHUB_USER = profileUrl.match(/github\.com\/([^/?#]+)/)?.[1];
   try {
     if (GITHUB_USER) {
@@ -462,7 +496,7 @@ module.exports = async (req, res) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
       if (method === "OPTIONS") return res.status(204).end();
       if (method !== "POST") return res.status(405).json({ ok: false, error: "POST only" });
-      const limit = rateLimit({ max: 10, windowMs: 300_000 });
+      const limit = rateLimit({ name: "hi-report", max: 10, windowMs: 300_000 });
       if (!limit(req, res)) return;
 
       const { infringing_url, license_id, platform, phash, reporter_note } = req.body ?? {};
@@ -516,6 +550,8 @@ module.exports = async (req, res) => {
         if (!checkAuth(req, res)) return;
         const { platform, profile_url } = req.body ?? {};
         if (!platform || !profile_url) return res.status(400).json({ ok: false, error: "platform and profile_url required" });
+        try { _assertFetchableSocialUrl(profile_url); }
+        catch (e) { return res.status(400).json({ ok: false, error: e.message }); }
         const code = "HI-VERIFY-" + Math.random().toString(36).slice(2, 10).toUpperCase();
         const { rows } = await db.query(
           "INSERT INTO hi_social_verifications (platform,profile_url,verify_code) VALUES ($1,$2,$3) RETURNING *",

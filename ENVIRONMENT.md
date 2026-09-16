@@ -83,6 +83,8 @@ OPENAI_MODEL
 VAPID_PRIVATE_KEY
 VAPID_PUBLIC_KEY
 VAPID_SUBJECT
+ZERODOT_CLIENT_ID
+ZERODOT_CLIENT_SECRET
 ```
 
 Optional compatibility aliases:
@@ -92,7 +94,26 @@ AUTH_API_BASE
 JARVIS_BACKEND_URL
 OPENAI_BASE_URL
 OTP_API_BASE
+ZERODOT_ISSUER          # defaults to https://0dot.in
+ZERODOT_SCOPE           # defaults to profile:read
+ZERODOT_REDIRECT_URI    # defaults to <request host>/auth/0dot/callback
 ```
+
+### "Sign in with 0dot"
+
+`api/auth/0dot/*` implements OAuth2 authorization-code + PKCE against 0dot.in.
+One-time setup:
+
+1. Sign in to 0dot.in, open `Settings -> Developer` (`/s/<username>/developer`).
+2. Create an app named `kingofyadav.in` with redirect URIs:
+   - `https://kingofyadav.in/auth/0dot/callback`
+   - `http://localhost:4321/auth/0dot/callback` (local dev)
+3. Add the `profile:read` scope to the app.
+4. Copy the `client_id` + `client_secret` into `ZERODOT_CLIENT_ID` /
+   `ZERODOT_CLIENT_SECRET` (Vercel + `.env`). The secret is shown once.
+
+`AUTH_JWT_SECRET` must be set — it signs the PKCE flow cookie and the
+resulting `hi_session` cookie.
 
 Do not commit `.vercel/.env.*.local` or Vercel CLI OIDC tokens.
 

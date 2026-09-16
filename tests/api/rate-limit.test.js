@@ -23,7 +23,8 @@ describe("rate limiter", () => {
   });
 
   it("middleware returns false and sets 429 when over limit", () => {
-    const limit = rateLimit({ max: 1, windowMs: 60_000 });
+    process.env.RL_ENFORCE = "1";
+    const limit = rateLimit({ name: `t-${Date.now()}`, max: 1, windowMs: 60_000 });
     const headers = {};
     const res = {
       statusCode: 200,
@@ -40,5 +41,19 @@ describe("rate limiter", () => {
     expect(headers["Retry-After"]).toBeTruthy();
     const body = JSON.parse(res._body);
     expect(body.code).toBe("RATE_LIMITED");
+    delete process.env.RL_ENFORCE;
+  });
+
+  it("namespaces counters by limiter name", () => {
+    process.env.RL_ENFORCE = "1";
+    const a = rateLimit({ name: "ns-a", max: 1, windowMs: 60_000 });
+    const b = rateLimit({ name: "ns-b", max: 1, windowMs: 60_000 });
+    const mkRes = () => ({ statusCode: 200, _body: "", setHeader() {}, end(x) { this._body = x; } });
+    const req = { headers: { "x-forwarded-for": `ns-${Date.now()}` }, socket: {} };
+
+    expect(a(req, mkRes())).toBe(true);
+    expect(a(req, mkRes())).toBe(false); // "a" exhausted
+    expect(b(req, mkRes())).toBe(true);  // "b" is independent
+    delete process.env.RL_ENFORCE;
   });
 });

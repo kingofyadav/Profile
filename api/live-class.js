@@ -1,10 +1,11 @@
 "use strict";
 
 const db = require("../lib/db");
+const { liveClass: liveClassLimit } = require("./_rate-limit");
 
-const TOKEN     = process.env.LIVE_CLASS_TOKEN;
-// OAI credentials are read at call time so they pick up runtime env changes
+// Secrets are read at call time so they pick up runtime env changes
 // (important in serverless where env vars are set after module load in some runtimes).
+const getClassToken = () => process.env.LIVE_CLASS_TOKEN || "";
 const MAX_BLOCKS = 80;
 
 const getToken = req => {
@@ -93,6 +94,7 @@ module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, x-live-class-token");
   if (req.method === "OPTIONS") return res.status(204).end();
+  if (!liveClassLimit(req, res)) return;
 
   const ROOM = getRoom(req);
 
@@ -115,7 +117,8 @@ module.exports = async (req, res) => {
   if (req.method === "POST") {
     const { action, text, language, url, caption, name, device, deviceId, id: viewerId } = req.body ?? {};
     const token     = getToken(req);
-    const isTeacher = TOKEN && token === TOKEN;
+    const classToken = getClassToken();
+    const isTeacher  = Boolean(classToken) && token === classToken;
     const ip        = maskIp(req.headers["x-forwarded-for"] ?? req.socket?.remoteAddress);
 
     await ensureSession(ROOM);

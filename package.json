@@ -6,7 +6,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node scripts/dev-server.js",
+    "dev:static": "node scripts/dev-server.js",
     "dev:api": "node server/otp-server.js",
     "tunnel": "ngrok start site --config ~/snap/ngrok/common/.config/ngrok/ngrok.yml",
     "tunnel:all": "ngrok start site api --config ~/snap/ngrok/common/.config/ngrok/ngrok.yml",
@@ -47,13 +47,14 @@
     ],
     "collectCoverageFrom": [
       "api/**/*.js",
+      "lib/auth-handlers/**/*.js",
       "!api/_*.js"
     ],
     "coverageThreshold": {
       "global": {
         "lines": 60
       },
-      "./api/auth/**": {
+      "./lib/auth-handlers/**": {
         "lines": 80
       },
       "./api/wallet/**": {
