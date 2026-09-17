@@ -37,7 +37,7 @@
 /* ── Access layout ── */
 .auth-shell {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
   width: min(1180px, 100%);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(380px, 450px);
@@ -226,6 +226,7 @@ body.theme-light .auth-tabs {
 
 .auth-tab {
   flex: 1;
+  min-height: 44px;
   padding: 10px 16px;
   border: none;
   border-radius: 9px;
@@ -235,6 +236,9 @@ body.theme-light .auth-tabs {
   background: transparent;
   color: inherit;
   opacity: 0.58;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   letter-spacing: 0.3px;
 }
@@ -398,7 +402,10 @@ body.theme-light .auth-field input {
 }
 
 .auth-link-btn {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
   width: fit-content;
   margin: 12px auto 0;
   padding: 0;
@@ -473,6 +480,9 @@ body.theme-light .auth-field input {
 }
 
 .auth-hint button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: none;
   border: none;
   color: var(--brand-green);
@@ -514,6 +524,9 @@ body.theme-light .auth-field input {
 }
 
 .auth-users-head button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   border: none;
   background: transparent;
   color: var(--brand-green);
@@ -780,7 +793,7 @@ body.theme-light .auth-user-item {
   pointer-events: none;
   filter: blur(90px);
   opacity: 0.2;
-  z-index: 0;
+  z-index: var(--z-below);
 }
 
 .auth-orb--1 {

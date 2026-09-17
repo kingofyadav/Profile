@@ -731,7 +731,7 @@ body.theme-light .order-form .form-group select option {
 .upi-modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--z-modal);
   background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -772,8 +772,8 @@ body.theme-light .upi-modal-inner {
   position: absolute;
   top: 18px;
   right: 20px;
-  width: 36px;
-  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(128, 128, 128, 0.2);
   background: transparent;
@@ -881,6 +881,7 @@ body.theme-light .upi-modal-inner {
   background: rgba(4, 106, 56, 0.08);
   border-radius: 999px;
   padding: 5px 12px;
+  min-height: 44px;
   font: inherit;
   font-size: 0.78rem;
   font-weight: 700;
@@ -906,6 +907,7 @@ body.theme-light .upi-modal-inner {
   align-items: center;
   justify-content: center;
   padding: 9px 10px;
+  min-height: 44px;
   border-radius: 10px;
   font-size: 0.8rem;
   font-weight: 700;
@@ -1062,7 +1064,7 @@ body.theme-light .upi-utr-input {
   }
 
   .upi-apps-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .upi-modal-foot {

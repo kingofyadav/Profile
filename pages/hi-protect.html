@@ -10,12 +10,13 @@
   <link rel="icon" href="/favicon/favicon.ico" />
   <meta name="theme-color" content="#046A38" />
   <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="/css/personal.css?v=20260917" />
-  <link rel="stylesheet" href="/css/auth.css?v=20260917" />
-  <link rel="stylesheet" href="/css/hi-app.css?v=20260917" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/personal.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/auth.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/hi-app.css?v=20260917e" />
   <style>
     .prot-wrap { max-width: 1100px; margin: 0 auto; padding: 2rem clamp(1rem,4vw,2.5rem) 5rem; }
 
@@ -217,8 +218,8 @@
 </head>
 <body class="theme-dark personal-page">
 
-<script src="/js/site-init.js?v=20260917"></script>
-<script src="/js/auth.js?v=20260917"></script>
+<script src="/js/site-init.js?v=20260917e"></script>
+<script src="/js/auth.js?v=20260917e"></script>
 <script>requireAuth(); document.documentElement.style.visibility="";</script>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
@@ -264,17 +265,17 @@
     <!-- Tab bar -->
     <div class="prot-tabs" role="tablist">
       <button class="prot-tab active" data-tab="protected" role="tab">Protected Content</button>
-      <button class="prot-tab" data-tab="alerts" role="tab">Alerts <span id="alertsBadge" style="display:none;background:var(--brand-orange);color:#fff;border-radius:99px;font-size:0.6rem;padding:1px 5px;margin-left:4px;"></span></button>
+      <button class="prot-tab" data-tab="alerts" role="tab">Alerts <span id="alertsBadge" class="hi-alerts-count-badge"></span></button>
       <button class="prot-tab" data-tab="detect" role="tab">Detect Repost</button>
       <button class="prot-tab" data-tab="social" role="tab">Social Verify</button>
     </div>
 
     <!-- ── Tab 1: Protected Content ── -->
     <div class="prot-panel active" id="panel-protected">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
-        <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
-          <div class="prot-sh" style="margin-bottom:0">Your registered content</div>
-          <div style="display:flex;gap:0.4rem;">
+      <div class="hi-panel-toolbar">
+        <div class="hi-filter-cluster">
+          <div class="prot-sh hi-sh-flush">Your registered content</div>
+          <div class="hi-filter-btn-group">
             <button class="prot-btn prot-btn-green prot-filter-btn" id="pfAll" onclick="filterProtected('all')">All</button>
             <button class="prot-btn prot-btn-muted prot-filter-btn" id="pfBlog" onclick="filterProtected('blog')">✍️ Blog Posts</button>
             <button class="prot-btn prot-btn-muted prot-filter-btn" id="pfOther" onclick="filterProtected('other')">Other</button>
@@ -287,9 +288,9 @@
 
     <!-- ── Tab 2: Alerts ── -->
     <div class="prot-panel" id="panel-alerts">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
-        <div class="prot-sh" style="margin-bottom:0">Flagged reposts</div>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+      <div class="hi-panel-toolbar">
+        <div class="prot-sh hi-sh-flush">Flagged reposts</div>
+        <div class="hi-btn-row-wrap">
           <button class="prot-btn prot-btn-muted" id="filterAll" onclick="filterAlerts('all')">All</button>
           <button class="prot-btn prot-btn-muted" id="filterNew" onclick="filterAlerts('new')">New</button>
           <button class="prot-btn prot-btn-muted" id="filterDmca" onclick="filterAlerts('dmca_sent')">DMCA Sent</button>
@@ -298,14 +299,14 @@
       <div id="alertsList"><div class="prot-empty"><span class="prot-spinner"></span></div></div>
 
       <!-- Report form -->
-      <div style="margin-top:2.5rem;">
+      <div class="hi-report-section">
         <div class="prot-sh">Report a repost URL</div>
-        <div class="prot-card" style="max-width:560px;">
+        <div class="prot-card hi-narrow-panel">
           <div class="prot-field">
             <label class="prot-label">Infringing URL *</label>
             <input class="prot-input" id="reportUrl" placeholder="https://www.instagram.com/p/..." />
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+          <div class="hi-report-grid-2col">
             <div class="prot-field">
               <label class="prot-label">Platform</label>
               <select class="prot-select" id="reportPlatform">
@@ -335,10 +336,10 @@
     <!-- ── Tab 3: Detect ── -->
     <div class="prot-panel" id="panel-detect">
       <div class="prot-sh">Upload suspected repost</div>
-      <p style="font-size:0.82rem;color:rgba(255,255,255,.45);margin-bottom:1.25rem;max-width:560px;">
+      <p class="hi-detect-intro">
         Upload an image or video you suspect was reposted without credit. The detector computes its fingerprint and checks it against all protected content.
       </p>
-      <div style="max-width:560px;">
+      <div class="hi-narrow-panel">
         <div class="prot-upload-zone" id="detectZone" onclick="document.getElementById('detectFile').click()"
              ondragover="event.preventDefault();this.classList.add('drag-over')"
              ondragleave="this.classList.remove('drag-over')"
@@ -348,7 +349,7 @@
           <div class="prot-upload-label">Drop image or video here</div>
           <div class="prot-upload-hint">JPG, PNG, MP4, MOV · up to 100 MB</div>
         </div>
-        <div id="detectProgress" style="display:none;font-size:0.8rem;color:rgba(255,255,255,.5);margin-top:0.75rem;display:flex;align-items:center;gap:0.5rem;">
+        <div id="detectProgress" class="hi-detect-progress">
           <span class="prot-spinner"></span><span id="detectProgressMsg">Processing…</span>
         </div>
         <div id="detectResult" style="display:none;"></div>
@@ -357,14 +358,14 @@
 
     <!-- ── Tab 4: Social Verify ── -->
     <div class="prot-panel" id="panel-social">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
-        <div class="prot-sh" style="margin-bottom:0">Verified accounts</div>
+      <div class="hi-panel-toolbar">
+        <div class="prot-sh hi-sh-flush">Verified accounts</div>
         <button class="prot-btn prot-btn-primary" onclick="showAddSocial()">+ Add Account</button>
       </div>
       <div id="socialList"><div class="prot-empty"><span class="prot-spinner"></span></div></div>
 
       <!-- Add account form -->
-      <div id="addSocialForm" style="display:none;margin-top:1.5rem;max-width:480px;">
+      <div id="addSocialForm" class="hi-inline-form-panel">
         <div class="prot-sh">Link a new account</div>
         <div class="prot-card">
           <div class="prot-field">
@@ -383,7 +384,7 @@
             <label class="prot-label">Profile URL *</label>
             <input class="prot-input" id="svProfileUrl" placeholder="https://www.instagram.com/kingofyadav.in" />
           </div>
-          <div style="display:flex;gap:0.5rem;">
+          <div class="hi-btn-row">
             <button class="prot-btn prot-btn-primary" onclick="addSocialAccount()">Generate Verify Code</button>
             <button class="prot-btn prot-btn-muted" onclick="document.getElementById('addSocialForm').style.display='none'">Cancel</button>
           </div>
@@ -391,20 +392,20 @@
       </div>
 
       <!-- Verify instructions (shown after code generated) -->
-      <div id="verifyInstructions" style="display:none;margin-top:1.5rem;max-width:480px;">
+      <div id="verifyInstructions" class="hi-inline-form-panel">
         <div class="prot-card">
-          <div class="prot-sh" style="margin-bottom:0.6rem">Step 2 — Add this code to your bio</div>
+          <div class="prot-sh hi-sh-tight">Step 2 — Add this code to your bio</div>
           <div class="prot-verify-code" id="verifyCodeDisplay"></div>
-          <p style="font-size:0.78rem;color:rgba(255,255,255,.45);margin:0.6rem 0 1rem;">
+          <p class="hi-verify-instructions-text">
             Add the code above to your bio on <strong id="verifyPlatformName"></strong>. You can remove it after verification.
           </p>
-          <div style="display:flex;gap:0.5rem;align-items:center;">
+          <div class="hi-btn-row-center">
             <button class="prot-btn prot-btn-green" id="checkVerifyBtn" onclick="checkVerification()">
               I've added it — Verify Now
             </button>
             <button class="prot-btn prot-btn-muted" onclick="document.getElementById('verifyInstructions').style.display='none';loadSocial()">Done</button>
           </div>
-          <div id="verifyCheckResult" style="display:none;margin-top:0.75rem;font-size:0.8rem;"></div>
+          <div id="verifyCheckResult" class="hi-verify-check-result"></div>
         </div>
       </div>
     </div>
@@ -414,10 +415,10 @@
 
 <div id="protToast"></div>
 
-<script src="/js/nav.js?v=20260917"></script>
-<script src="/js/script.js?v=20260917"></script>
-<script src="/js/hi-watermark.js?v=20260917"></script>
-<script src="/js/hi-detect.js?v=20260917"></script>
+<script src="/js/nav.js?v=20260917e"></script>
+<script src="/js/script.js?v=20260917e"></script>
+<script src="/js/hi-watermark.js?v=20260917e"></script>
+<script src="/js/hi-detect.js?v=20260917e"></script>
 <script>
 "use strict";
 
@@ -486,8 +487,8 @@ function renderProtected() {
 
   if (!list.length) {
     el.innerHTML = _licenses.length
-      ? `<div class="prot-empty">No ${_protectedFilter === "blog" ? "blog post" : "other"} licenses found. <button class="prot-btn prot-btn-muted" onclick="filterProtected('all')" style="margin-left:0.5rem;">Show All</button></div>`
-      : `<div class="prot-empty">No protected content yet.<br><a href="/pages/hi-license.html" class="prot-btn prot-btn-green" style="margin-top:0.75rem;display:inline-flex;">Register Your First Content →</a></div>`;
+      ? `<div class="prot-empty">No ${_protectedFilter === "blog" ? "blog post" : "other"} licenses found. <button class="prot-btn prot-btn-muted hi-show-all-btn" onclick="filterProtected('all')">Show All</button></div>`
+      : `<div class="prot-empty">No protected content yet.<br><a href="/pages/hi-license.html" class="prot-btn prot-btn-green hi-empty-cta">Register Your First Content →</a></div>`;
     return;
   }
 
@@ -570,23 +571,23 @@ function renderAlerts() {
     const statusBadge = { new: "badge-orange", actioned: "badge-green", ignored: "badge-muted", dmca_sent: "badge-green" }[a.status] || "badge-muted";
     return `<div class="prot-card" id="alert-${esc(a.id)}">
       <div class="prot-card-row">
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;flex-wrap:wrap;">
+        <div class="hi-alert-body">
+          <div class="hi-alert-meta-row">
             <span class="badge ${statusBadge}">${esc(a.status.replace("_"," "))}</span>
-            ${a.platform ? `<span class="platform-icon">${platformIcon(a.platform)}</span><span style="font-size:0.75rem;color:rgba(255,255,255,.5)">${esc(a.platform)}</span>` : ""}
-            <span style="font-size:0.7rem;color:rgba(255,255,255,.3)">${(a.created_at||"").slice(0,10)}</span>
+            ${a.platform ? `<span class="platform-icon">${platformIcon(a.platform)}</span><span class="hi-alert-platform-label">${esc(a.platform)}</span>` : ""}
+            <span class="hi-alert-date">${(a.created_at||"").slice(0,10)}</span>
           </div>
-          <div class="prot-card-id" style="margin-bottom:0.35rem;">${a.license_id ? "License: " + esc(a.license_id) : "No license matched"}</div>
-          <div style="font-size:0.78rem;color:rgba(255,255,255,.55);word-break:break-all;margin-bottom:0.6rem;">
-            <a href="${esc(a.infringing_url)}" target="_blank" rel="noopener" style="color:var(--brand-orange);text-decoration:none;">${esc(a.infringing_url)}</a>
+          <div class="prot-card-id hi-alert-license-id">${a.license_id ? "License: " + esc(a.license_id) : "No license matched"}</div>
+          <div class="hi-alert-url-wrap">
+            <a href="${esc(a.infringing_url)}" target="_blank" rel="noopener" class="hi-alert-url-link">${esc(a.infringing_url)}</a>
           </div>
-          ${conf > 0 ? `<div class="conf-bar" style="max-width:260px;">
+          ${conf > 0 ? `<div class="conf-bar hi-conf-bar-narrow">
             <div class="conf-track"><div class="conf-fill ${confClass}" style="width:${conf}%"></div></div>
             <span class="conf-pct">${conf}%</span>
-            <span style="font-size:0.65rem;color:rgba(255,255,255,.35)">confidence</span>
+            <span class="hi-conf-caption">confidence</span>
           </div>` : ""}
         </div>
-        <div class="prot-card-actions" style="flex-direction:column;align-items:flex-end;">
+        <div class="prot-card-actions hi-actions-col">
           <a href="${esc(a.infringing_url)}" target="_blank" rel="noopener" class="prot-btn prot-btn-muted">View</a>
           ${a.license_id ? `<a href="/claim/${esc(a.license_id)}" target="_blank" class="prot-btn prot-btn-orange">DMCA</a>` : ""}
           <button class="prot-btn prot-btn-green" onclick="setAlertStatus('${esc(a.id)}','actioned')">✓ Actioned</button>
@@ -663,41 +664,41 @@ async function runDetect(file) {
     let html = `<div class="prot-result ${matches.length ? 'prot-result-match' : 'prot-result-clean'}">`;
 
     if (watermark) {
-      html += `<div style="margin-bottom:0.75rem;"><span class="badge badge-orange" style="font-size:0.65rem;">Watermark Found</span><span style="font-size:0.78rem;color:rgba(255,255,255,.6);margin-left:0.5rem;">License: ${esc(watermark)}</span></div>`;
+      html += `<div class="hi-watermark-found-wrap"><span class="badge badge-orange hi-badge-sm">Watermark Found</span><span class="hi-watermark-license-label">License: ${esc(watermark)}</span></div>`;
     }
 
     if (matches.length) {
-      html += `<div style="font-weight:700;font-size:0.88rem;color:var(--brand-orange);margin-bottom:0.75rem;">⚠ ${matches.length} match${matches.length > 1 ? "es" : ""} found</div>`;
+      html += `<div class="hi-match-count-warn">⚠ ${matches.length} match${matches.length > 1 ? "es" : ""} found</div>`;
       matches.forEach(m => {
         const conf = m.confidence || 0;
         const confClass = conf >= 85 ? "" : conf >= 60 ? "warn" : "danger";
-        html += `<div style="margin-bottom:0.75rem;padding:0.75rem;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);">
-          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+        html += `<div class="hi-match-card">
+          <div class="hi-match-card-head">
             <span class="badge badge-orange">${m.method || "phash"}</span>
           </div>
-          <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.25rem;">${esc(m.title)}</div>
-          <div style="font-size:0.72rem;color:rgba(255,255,255,.4);margin-bottom:0.5rem;">by ${esc(m.author)} · ${esc(m.created || "")}</div>
-          <div class="conf-bar" style="max-width:260px;margin-bottom:0.6rem;">
+          <div class="hi-match-title">${esc(m.title)}</div>
+          <div class="hi-match-byline">by ${esc(m.author)} · ${esc(m.created || "")}</div>
+          <div class="conf-bar hi-conf-bar-spaced">
             <div class="conf-track"><div class="conf-fill ${confClass}" style="width:${conf}%"></div></div>
-            <span class="conf-pct">${conf}%</span><span style="font-size:0.65rem;color:rgba(255,255,255,.35)">confidence</span>
+            <span class="conf-pct">${conf}%</span><span class="hi-conf-caption">confidence</span>
           </div>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <div class="hi-btn-row-wrap">
             <a href="${esc(m.verify_url)}" target="_blank" class="prot-btn prot-btn-green">View License</a>
             <a href="/claim/${esc(m.claim_id)}" target="_blank" class="prot-btn prot-btn-orange">Generate DMCA</a>
           </div>
         </div>`;
       });
     } else {
-      html += `<div style="font-weight:700;font-size:0.88rem;color:var(--brand-green);margin-bottom:0.5rem;">✓ No matches found</div>
-        <div style="font-size:0.78rem;color:rgba(255,255,255,.45);">Checked against ${resp.checked || 0} protected items. This content does not appear to be registered on HI App.</div>`;
+      html += `<div class="hi-clean-result-head">✓ No matches found</div>
+        <div class="hi-clean-result-sub">Checked against ${resp.checked || 0} protected items. This content does not appear to be registered on HI App.</div>`;
     }
 
-    html += `<div class="prot-hash" style="margin-top:0.75rem;">pHash: ${esc(phash)}</div></div>`;
+    html += `<div class="prot-hash hi-hash-spaced">pHash: ${esc(phash)}</div></div>`;
     res.innerHTML = html;
     res.style.display = "block";
   } catch (e) {
     prog.style.display = "none";
-    res.innerHTML = `<div class="prot-result"><div style="color:#ff6b6b;font-size:0.82rem;">Error: ${esc(e.message)}</div></div>`;
+    res.innerHTML = `<div class="prot-result"><div class="hi-error-text">Error: ${esc(e.message)}</div></div>`;
     res.style.display = "block";
   }
 }
@@ -718,17 +719,17 @@ function renderSocial() {
     return `<div class="prot-card">
       <div class="prot-card-row">
         <div>
-          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+          <div class="hi-social-row-head">
             <span class="platform-icon">${platformIcon(s.platform)}</span>
-            <span style="font-weight:700;font-size:0.88rem;">${esc(s.platform)}</span>
+            <span class="hi-social-platform-name">${esc(s.platform)}</span>
             <span class="badge ${verified ? 'badge-green' : 'badge-orange'}">${verified ? "✓ Verified" : "Pending"}</span>
           </div>
-          <div style="font-size:0.76rem;color:rgba(255,255,255,.45);word-break:break-all;">
-            <a href="${esc(s.profile_url)}" target="_blank" rel="noopener" style="color:inherit;">${esc(s.profile_url)}</a>
+          <div class="hi-social-url">
+            <a href="${esc(s.profile_url)}" target="_blank" rel="noopener" class="hi-link-plain">${esc(s.profile_url)}</a>
           </div>
-          ${!verified ? `<div style="margin-top:0.5rem;">Add <code style="font-size:0.72rem;background:rgba(4,106,56,.1);padding:2px 6px;border-radius:6px;color:var(--brand-green);">${esc(s.verify_code)}</code> to your bio then click Verify</div>` : ""}
+          ${!verified ? `<div class="hi-social-verify-hint">Add <code class="hi-verify-code-inline">${esc(s.verify_code)}</code> to your bio then click Verify</div>` : ""}
         </div>
-        <div class="prot-card-actions" style="flex-direction:column;align-items:flex-end;">
+        <div class="prot-card-actions hi-actions-col">
           ${!verified ? `<button class="prot-btn prot-btn-green" onclick="runSocialCheck('${esc(s.id)}','${esc(s.platform)}')">Verify Now</button>` : ""}
           <button class="prot-btn prot-btn-red" onclick="removeSocial('${esc(s.id)}')">Remove</button>
         </div>
@@ -791,12 +792,12 @@ async function checkVerification() {
   const res = document.getElementById("verifyCheckResult");
   res.style.display = "block";
   if (resp.verified) {
-    res.innerHTML = `<span style="color:var(--brand-green);font-weight:700;">✓ Verified!</span> Code found in your bio.`;
+    res.innerHTML = `<span class="hi-verify-success-text">✓ Verified!</span> Code found in your bio.`;
     toast("Account verified!", "ok");
     document.getElementById("verifyInstructions").style.display = "none";
     await loadSocial();
   } else {
-    res.innerHTML = `<span style="color:var(--brand-orange);font-weight:700;">Not found yet.</span> ${esc(resp.reason || "Make sure the code is in your bio and the profile is public.")}`;
+    res.innerHTML = `<span class="hi-verify-fail-text">Not found yet.</span> ${esc(resp.reason || "Make sure the code is in your bio and the profile is public.")}`;
   }
 }
 

@@ -12,11 +12,12 @@
 <meta property="og:url" content="https://kingofyadav.in/pages/haven.html" />
 <meta property="og:type" content="website" />
 
-<link rel="stylesheet" href="/css/base.css?v=20260917" />
-<link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-<link rel="stylesheet" href="/css/personal.css?v=20260917" />
-<link rel="stylesheet" href="/css/auth.css?v=20260917" />
+<link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+<link rel="stylesheet" href="/css/base.css?v=20260917e" />
+<link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+<link rel="stylesheet" href="/css/personal.css?v=20260917e" />
+<link rel="stylesheet" href="/css/auth.css?v=20260917e" />
 <link rel="icon" href="/favicon/favicon.ico" />
 <link rel="canonical" href="https://kingofyadav.in/pages/haven.html" />
 <script type="application/ld+json">
@@ -704,7 +705,7 @@
 </head>
 
 <body class="theme-dark" data-profile-page="myHome">
-<script src="/js/site-init.js?v=20260917"></script>
+<script src="/js/site-init.js?v=20260917e"></script>
 
 <div id="scrollProgress"></div>
 <a href="#main-content" class="skip-link">Skip to content</a>
@@ -780,14 +781,14 @@
   <section class="hav-auth-section" id="auth-journey" aria-label="Authentication end-to-end journey">
     <div class="hav-auth-head">
       <div>
-        <div class="hav-section-head" style="margin-bottom:10px">
+        <div class="hav-section-head hav-section-head--tight">
           <h2>Authentication — End to End</h2>
           <span class="hav-tag hav-tag-green">Security System</span>
         </div>
         <p>
           Every private page in the HI ecosystem is protected by a four-layer auth pipeline.
           Your device generates a stable fingerprint, SHA-256 hashes it into a bound ID,
-          a signed token carries your session, and <code style="font-size:.82em">requireAuth()</code>
+          a signed token carries your session, and <code class="hav-inline-code">requireAuth()</code>
           guards every page load — with zero passwords stored in clear text.
         </p>
       </div>
@@ -806,7 +807,7 @@
         <div class="hav-step-num">01</div>
         <p class="hav-step-title">Fingerprint</p>
         <div class="hav-step-body">
-          <strong style="display:block;margin-bottom:6px;font-size:.74rem">Browser Signals Collected</strong>
+          <strong class="hav-step-label">Browser Signals Collected</strong>
           Your device is silently profiled by reading:
           <ul>
             <li>User Agent string</li>
@@ -825,10 +826,10 @@
         <div class="hav-step-num">02</div>
         <p class="hav-step-title">SHA-256 Hash</p>
         <div class="hav-step-body">
-          <strong style="display:block;margin-bottom:6px;font-size:.74rem">One-Way Transformation</strong>
+          <strong class="hav-step-label">One-Way Transformation</strong>
           All collected signals are concatenated and passed through the Web Crypto API:
           <ul>
-            <li><code style="font-size:.7em">crypto.subtle.digest("SHA-256",...)</code></li>
+            <li><code class="hav-inline-code-sm">crypto.subtle.digest("SHA-256",...)</code></li>
             <li>256-bit output → 64 hex chars</li>
             <li>Avalanche effect: 1 bit change → 50% output flip</li>
             <li>Irreversible — cannot be reversed to source data</li>
@@ -842,7 +843,7 @@
         <div class="hav-step-num">03</div>
         <p class="hav-step-title">Auth Token</p>
         <div class="hav-step-body">
-          <strong style="display:block;margin-bottom:6px;font-size:.74rem">Session Credential Issued</strong>
+          <strong class="hav-step-label">Session Credential Issued</strong>
           After login, server returns a signed JSON token stored in:
           <ul>
             <li><strong>sessionStorage</strong> — tab-only (default)</li>
@@ -859,15 +860,15 @@
         <div class="hav-step-num">04</div>
         <p class="hav-step-title">Page Guard</p>
         <div class="hav-step-body">
-          <strong style="display:block;margin-bottom:6px;font-size:.74rem">requireAuth() on Every Page</strong>
+          <strong class="hav-step-label">requireAuth() on Every Page</strong>
           Every private page runs a guard on load:
           <ul>
             <li>Read token from sessionStorage/localStorage</li>
-            <li>Parse JSON → check <code style="font-size:.7em">Date.now() &lt; exp</code></li>
+            <li>Parse JSON → check <code class="hav-inline-code-sm">Date.now() &lt; exp</code></li>
             <li>Valid → show page, display username</li>
             <li>Expired/missing → redirect to login</li>
           </ul>
-          <span class="hav-code-pill" style="color:var(--hav-orange);background:rgba(255,103,31,.1)">→ /pages/login.html?next=…</span>
+          <span class="hav-code-pill hav-code-pill--orange">→ /pages/login.html?next=…</span>
         </div>
       </div>
 
@@ -881,7 +882,7 @@
       <span class="hav-tag hav-tag-blue">How It Works</span>
     </div>
 
-    <p style="color:var(--hav-muted);font-size:.9rem;line-height:1.7;margin:0 0 4px">
+    <p class="hav-lead">
       A device fingerprint is a stable, unique identifier derived entirely from your browser's
       environment — no hardware chip, no server call, no cookie. Below are the signals
       collected on <em>this</em> device right now:
@@ -915,8 +916,8 @@
     </div>
 
     <!-- SHA-256 flow -->
-    <div class="hav-section-head" style="margin-bottom:12px">
-      <h2 style="font-size:1.1rem">SHA-256 Transformation</h2>
+    <div class="hav-section-head hav-section-head--sm">
+      <h2 class="hav-subsection-title">SHA-256 Transformation</h2>
       <span class="hav-tag hav-tag-green">Cryptographic Pipeline</span>
     </div>
     <div class="hav-sha-flow" aria-label="SHA-256 hash transformation">
@@ -930,7 +931,7 @@
       </div>
       <div class="hav-sha-box output">
         <span class="hav-sha-box-label">Device ID (64 hex chars)</span>
-        <span class="hav-sha-box-value" id="shaOutput" style="font-size:.62rem">computing…</span>
+        <span class="hav-sha-box-value hav-sha-output-size" id="shaOutput">computing…</span>
       </div>
     </div>
 
@@ -951,22 +952,22 @@
       <h2>Auth Token Anatomy</h2>
       <span class="hav-tag hav-tag-blue">ak_auth_token</span>
     </div>
-    <p style="color:var(--hav-muted);font-size:.9rem;line-height:1.7;margin:0 0 4px">
-      The token stored in <code style="font-size:.82em">sessionStorage</code> (or <code style="font-size:.82em">localStorage</code>
+    <p class="hav-lead">
+      The token stored in <code class="hav-inline-code">sessionStorage</code> (or <code class="hav-inline-code">localStorage</code>
       when "remember me" is active) is a JSON object with these fields:
     </p>
     <div class="hav-token-box">
       <pre><span class="k">{</span>
-  <span class="s">"username"</span>: <span class="b">"amitky"</span>,          <span style="color:var(--hav-label);font-size:.7em">// display name across all pages</span>
-  <span class="s">"exp"</span>:      <span class="n">1747234567890</span>,    <span style="color:var(--hav-label);font-size:.7em">// Unix ms — checked on every page load</span>
-  <span class="s">"role"</span>:     <span class="b">"owner"</span>,           <span style="color:var(--hav-label);font-size:.7em">// access level (owner / member / guest)</span>
-  <span class="s">"issued"</span>:   <span class="n">1747148167890</span>    <span style="color:var(--hav-label);font-size:.7em">// creation timestamp (audit trail)</span>
+  <span class="s">"username"</span>: <span class="b">"amitky"</span>,          <span class="hav-code-comment">// display name across all pages</span>
+  <span class="s">"exp"</span>:      <span class="n">1747234567890</span>,    <span class="hav-code-comment">// Unix ms — checked on every page load</span>
+  <span class="s">"role"</span>:     <span class="b">"owner"</span>,           <span class="hav-code-comment">// access level (owner / member / guest)</span>
+  <span class="s">"issued"</span>:   <span class="n">1747148167890</span>    <span class="hav-code-comment">// creation timestamp (audit trail)</span>
 <span class="k">}</span></pre>
     </div>
 
     <!-- Session guard flow -->
-    <div class="hav-section-head" style="margin-top:28px;margin-bottom:12px">
-      <h2 style="font-size:1.1rem">Session Guard Flow</h2>
+    <div class="hav-section-head hav-section-head--divider">
+      <h2 class="hav-subsection-title">Session Guard Flow</h2>
       <span class="hav-tag hav-tag-orange">requireAuth()</span>
     </div>
     <div class="hav-guard-flow" aria-label="Session guard flow diagram">
@@ -979,7 +980,7 @@
       <span class="hav-guard-node gn">Check exp</span>
       <span class="hav-guard-arrow">→</span>
       <span class="hav-guard-node gg">✓ Valid → Show Page</span>
-      <span style="color:var(--hav-label);font-size:.85rem;padding:0 4px">|</span>
+      <span class="hav-guard-sep">|</span>
       <span class="hav-guard-node go">✗ Expired → Login</span>
     </div>
   </section>
@@ -1013,7 +1014,7 @@
       <h2>Core Values</h2>
       <span class="hav-tag hav-tag-green">Non-Negotiable</span>
     </div>
-    <div class="hav-grid4" style="grid-template-columns:repeat(5,1fr)">
+    <div class="hav-grid4 hav-grid4--5col">
       <div class="hav-card">
         <div class="hav-card-icon">⚙️</div>
         <h3>Discipline</h3>
@@ -1078,7 +1079,7 @@
       <h2>Digital Home Infrastructure</h2>
       <span class="hav-tag hav-tag-blue">Security Layer</span>
     </div>
-    <p style="color:var(--hav-muted);font-size:.9rem;line-height:1.7;margin:0 0 20px">
+    <p class="hav-lead hav-lead--wide">
       In 2026, home is also a digital environment. The same values that govern the physical
       home — discipline, privacy, accountability — govern the digital one.
     </p>
@@ -1202,10 +1203,10 @@
   <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
-<script src="/js/auth.js?v=20260917"></script>
-<script src="/js/footer.js?v=20260917" defer></script>
-<script src="/js/nav.js?v=20260917" defer></script>
-<script src="/js/script.js?v=20260917" defer></script>
+<script src="/js/auth.js?v=20260917e"></script>
+<script src="/js/footer.js?v=20260917e" defer></script>
+<script src="/js/nav.js?v=20260917e" defer></script>
+<script src="/js/script.js?v=20260917e" defer></script>
 <script>
   var _u = document.getElementById("authUserDisplay");
   if (_u && typeof getAuthUser === "function") _u.textContent = getAuthUser() || "";
@@ -1267,6 +1268,6 @@
 })();
 </script>
 
-<script src="/api-static/jarvis-widget.js?v=20260917" data-endpoint="/api/jarvis-chat" data-live-endpoint="wss://jarvis.kingofyadav.in/api/ws/public" data-enquiry-endpoint="https://jarvis.kingofyadav.in/api/public-enquiry" data-signup-endpoint="https://jarvis.kingofyadav.in/api/public-signup" data-title="Jarvis AI" data-subtitle="Ask Jarvis about King Yadav and the website." data-site-line="Explore identity, writing, services, ventures, and collaboration." defer></script>
+<script src="/api-static/jarvis-widget.js?v=20260917e" data-endpoint="/api/jarvis-chat" data-live-endpoint="wss://jarvis.kingofyadav.in/api/ws/public" data-enquiry-endpoint="https://jarvis.kingofyadav.in/api/public-enquiry" data-signup-endpoint="https://jarvis.kingofyadav.in/api/public-signup" data-title="Jarvis AI" data-subtitle="Ask Jarvis about King Yadav and the website." data-site-line="Explore identity, writing, services, ventures, and collaboration." defer></script>
 </body>
 </html>

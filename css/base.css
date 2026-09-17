@@ -59,15 +59,9 @@
   /* Layout */
   --header-height: 80px;
 
-  /* Brand Core */
-  --brand-green: #046A38;
-  --brand-green-deep: #034f2a;
-  --brand-green-soft: rgba(4,106,56,0.15);
-
-  --brand-orange: #FF671F;
-  --brand-orange-deep: #e55a16;
-  --brand-orange-soft: rgba(255,103,31,0.15);
-
+  /* Brand Core: --brand-green/-deep/-soft and --brand-orange/-deep/-soft
+     are defined in brand-tokens.css (auto-generated from brand-tokens.json,
+     linked before this file on every page) — not redeclared here. */
   --brand-blue: #000080;
 
   /* Gradients */
@@ -248,7 +242,7 @@ body::after {
     radial-gradient(circle at 20% 30%, var(--brand-green-soft), transparent 50%),
     radial-gradient(circle at 80% 70%, var(--brand-orange-soft), transparent 50%);
   pointer-events: none;
-  z-index: -1;
+  z-index: var(--z-below);
   filter: blur(100px);
 }
 
@@ -320,7 +314,7 @@ body.theme-light p {
   color: #fff;
   padding: 8px 12px;
   border-radius: 6px;
-  z-index: 1000;
+  z-index: var(--z-top);
 }
 
 .skip-link:focus {
@@ -551,7 +545,7 @@ body.theme-light :where(form) select option {
   height: 3px;
   width: 0%;
   background: linear-gradient(90deg, var(--brand-green), var(--brand-orange));
-  z-index: 9999;
+  z-index: var(--z-top);
   border-radius: 0 2px 2px 0;
   transition: width 0.05s linear;
   pointer-events: none;
@@ -563,7 +557,7 @@ body.theme-light :where(form) select option {
 
 #backToTop {
   position: fixed;
-  bottom: 32px;
+  bottom: max(32px, env(safe-area-inset-bottom));
   right: 28px;
   width: 44px;
   height: 44px;
@@ -575,7 +569,7 @@ body.theme-light :where(form) select option {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 998;
+  z-index: var(--z-fixed);
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
@@ -615,10 +609,10 @@ body.theme-light :where(form) select option {
   }
 
   #backToTop {
-    bottom: 92px;
+    bottom: max(92px, env(safe-area-inset-bottom));
     right: 20px;
-    width: 40px;
-    height: 40px;
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 

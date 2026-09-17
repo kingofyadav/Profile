@@ -644,7 +644,7 @@ body.theme-light .step-body {
     linear-gradient(120deg, rgba(4,106,56,.14), transparent 46%),
     linear-gradient(300deg, rgba(255,103,31,.12), transparent 44%);
   pointer-events: none;
-  z-index: -1;
+  z-index: var(--z-below);
 }
 
 body.theme-dark .collab-hi-app-section {
@@ -806,7 +806,7 @@ body.theme-light .collab-hi-app-grid > div {
   height: 350px;
   background: radial-gradient(circle, rgba(255,103,31,0.1), transparent 70%);
   filter: blur(80px);
-  z-index: -1;
+  z-index: var(--z-below);
   pointer-events: none;
 }
 
@@ -914,7 +914,7 @@ body.theme-light .collab-hi-app-grid > div {
   background: linear-gradient(135deg, var(--brand-green-soft), var(--brand-orange-soft));
   opacity: 0.45;
   pointer-events: none;
-  z-index: -1;
+  z-index: var(--z-below);
 }
 
 body.theme-dark .collab-cta {

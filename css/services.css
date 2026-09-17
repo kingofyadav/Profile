@@ -161,7 +161,9 @@ body.theme-light .se-shortcut { border-color: rgba(0, 0, 0, 0.15); }
 .se-tag {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  min-height: 44px;
   padding: 7px 16px;
   border-radius: 999px;
   font-size: 0.74rem;
@@ -245,8 +247,8 @@ body.theme-light .se-tag:hover { border-color: var(--brand-green); }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 8px;
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   background: transparent;
@@ -552,7 +554,7 @@ body.theme-light .se-view-btn.active { color: #fff; }
   .se-card { padding: 20px 18px 18px; }
 
   .se-filter-row { gap: 6px; }
-  .se-tag { padding: 6px 12px; font-size: 0.7rem; }
+  .se-tag { min-height: 44px; padding: 6px 12px; font-size: 0.7rem; }
 
   .se-page[data-view="list"] .se-card { flex-direction: column; }
   .se-page[data-view="list"] .se-card-header { flex-direction: row; width: auto; text-align: left; align-items: flex-start; }

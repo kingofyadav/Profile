@@ -52,7 +52,7 @@ a {
   position: fixed;
   inset: 0 0 auto 0;
   width: 100%;
-  z-index: 1000;
+  z-index: var(--z-fixed);
   backdrop-filter: blur(18px) saturate(160%);
   transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
@@ -430,7 +430,7 @@ body {
   height: 700px;
   background: radial-gradient(circle, rgba(255,103,31,0.14), transparent 70%);
   filter: blur(80px);
-  z-index: -1;
+  z-index: var(--z-below);
   pointer-events: none;
 }
 
@@ -683,7 +683,7 @@ body.theme-light .site-footer {
   min-height: 6px !important;
   flex: 0 0 6px !important;
   position: relative !important;
-  z-index: 40 !important;
+  z-index: var(--z-raised) !important;
   overflow: hidden !important;
   background: linear-gradient(
     90deg,
@@ -852,8 +852,8 @@ body.theme-light .site-footer {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   background: rgba(128,128,128,0.1);
   transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
@@ -1057,8 +1057,8 @@ body.theme-light .site-footer {
     order: 3;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     margin-left: 0;
     border: 1px solid rgba(128,128,128,0.18);
     border-radius: 999px;
@@ -1161,7 +1161,7 @@ body.theme-light .site-footer {
     justify-content: flex-start;
     text-align: left;
     opacity: 1;
-    min-height: 42px;
+    min-height: 44px;
     padding: 11px 12px;
     font-size: 0.95rem;
     letter-spacing: 0.3px;
@@ -1364,8 +1364,8 @@ body.theme-light .site-footer {
   }
 
   .footer-social-link {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
   }
 }
 /* ================= MODAL SYSTEM ================= */
@@ -1376,7 +1376,7 @@ body.theme-light .site-footer {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: var(--z-top);
 }
 
 .modal.active {
@@ -1409,6 +1409,11 @@ body.theme-light .site-footer {
   position: absolute;
   top: 15px;
   right: 20px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 24px;
   background: none;
   border: none;
@@ -1654,7 +1659,7 @@ body.theme-light .contact-library-item {
 
 .sw-update-banner {
   position: fixed;
-  bottom: 80px;
+  bottom: max(80px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   background: var(--brand-green, #046A38);
@@ -1663,11 +1668,13 @@ body.theme-light .contact-library-item {
   border-radius: 12px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
-  z-index: 9999;
+  z-index: var(--z-toast);
   font-size: .9rem;
   box-shadow: 0 8px 32px rgba(0,0,0,.4);
-  white-space: nowrap;
+  max-width: min(420px, calc(100vw - 32px));
+  white-space: normal;
 }
 
 .sw-update-banner button {
@@ -1689,7 +1696,7 @@ body.theme-light .contact-library-item {
 
 #pwaInstallBar {
   position: fixed;
-  bottom: 22px;
+  bottom: max(22px, env(safe-area-inset-bottom));
   left: 50%;
   width: min(92vw, 380px);
   padding: 18px;
@@ -1699,7 +1706,7 @@ body.theme-light .contact-library-item {
   box-shadow: 0 24px 80px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.08);
   color: #fff;
   transform: translateX(-50%);
-  z-index: 10020;
+  z-index: var(--z-toast);
 }
 
 #pwaInstallBar[hidden] {
@@ -1715,7 +1722,7 @@ body.theme-light #pwaInstallBar {
 
 .pwa-ib-top {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 34px;
+  grid-template-columns: 42px minmax(0, 1fr) 44px;
   gap: 12px;
   align-items: center;
   margin-bottom: 16px;
@@ -1752,8 +1759,8 @@ body.theme-light .pwa-ib-text span {
 .pwa-ib-dismiss {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 999px;
   background: rgba(255,255,255,.08);
@@ -1806,7 +1813,7 @@ body.theme-light .pwa-ib-dismiss:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  z-index: 9999;
+  z-index: var(--z-toast);
   transition: bottom .45s cubic-bezier(.34,1.56,.64,1);
 
   /* default (dark) */
@@ -1832,7 +1839,7 @@ body.theme-light .pwa-install-banner {
   --pwa-dismiss-hover-color: #111111;
 }
 
-.pwa-install-banner.pwa-banner-visible { bottom: 24px; }
+.pwa-install-banner.pwa-banner-visible { bottom: max(24px, env(safe-area-inset-bottom)); }
 
 .pwa-install-icon { flex-shrink: 0; }
 .pwa-install-icon img { border-radius: 10px; display: block; width: 40px; height: 40px; }
@@ -1900,14 +1907,14 @@ body.theme-light .pwa-install-banner {
 
 @media (max-width: 480px) {
   #pwaInstallBar {
-    bottom: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
     width: calc(100dvw - 28px);
     max-width: calc(100% - 28px);
     padding: 16px;
   }
 
   .pwa-ib-top {
-    grid-template-columns: 40px minmax(0, 1fr) 32px;
+    grid-template-columns: 40px minmax(0, 1fr) 44px;
     gap: 10px;
   }
 

@@ -8,11 +8,12 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href="favicon/favicon.ico" />
   <meta name="theme-color" content="#046A38" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="css/wallet-nav.css?v=20260917" />
-  <link rel="stylesheet" href="css/wallet-app.css?v=20260917" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="css/wallet-nav.css?v=20260917e" />
+  <link rel="stylesheet" href="css/wallet-app.css?v=20260917e" />
   <style>
     /* ── Layout ── */
     .rc-main {
@@ -699,9 +700,9 @@
       <span></span><span></span><span></span>
     </button>
     <nav class="wallet-nav" aria-label="Wallet navigation" data-nav="wallet"></nav>
-    <div class="rc-hdr-badge" id="rcHdrBadge" style="display:none;align-items:center;gap:8px;font-size:.78rem;font-weight:700;padding:6px 12px;border-radius:99px;background:rgba(4,106,56,.2);border:1px solid rgba(4,106,56,.3)">
-      <span style="opacity:.6" id="rcHdrUser"></span>
-      <strong style="color:#4ade80" id="rcHdrBal">0 RC</strong>
+    <div class="rc-hdr-badge rc-hdr-badge--compact" id="rcHdrBadge" style="display:none">
+      <span class="rc-hdr-user" id="rcHdrUser"></span>
+      <strong class="rc-hdr-bal" id="rcHdrBal">0 RC</strong>
     </div>
   </div>
 </header>
@@ -718,21 +719,21 @@
           <div class="rc-auth-brand-sub">Human Digital Identity · RC Wallet</div>
         </div>
       </div>
-      <div class="rc-auth-card" style="text-align:center">
-        <div id="rcGateHdiDisplay" style="margin-bottom:20px;display:none">
-          <p style="font-size:.72rem;opacity:.5;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Your HDI</p>
-          <div id="rcGateHdiCode" style="font-family:monospace;font-size:1.05rem;font-weight:700;color:#4ade80;letter-spacing:1px;padding:10px 16px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);border-radius:10px;word-break:break-all"></div>
+      <div class="rc-auth-card rc-auth-card--centered">
+        <div id="rcGateHdiDisplay" class="rc-gate-hdi-display" style="display:none">
+          <p class="rc-gate-hdi-label">Your HDI</p>
+          <div id="rcGateHdiCode" class="rc-gate-hdi-code"></div>
         </div>
-        <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,rgba(4,106,56,.5),rgba(255,103,31,.35));border:1px solid rgba(4,106,56,.4);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 20px">🌐</div>
-        <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:10px;line-height:1.2">Your Wallet Needs an Identity</h2>
-        <p id="rcGateMsg" style="font-size:.85rem;opacity:.65;line-height:1.6;margin-bottom:24px">
+        <div class="rc-gate-icon-wrap">🌐</div>
+        <h2 class="rc-gate-title">Your Wallet Needs an Identity</h2>
+        <p id="rcGateMsg" class="rc-gate-msg">
           Set up your Human Digital Identity (HDI) first. Your wallet is cryptographically tied to your identity — it's what makes your coins uniquely yours.
         </p>
         <a id="rcGateSetupBtn" href="/pages/personal.html#setup"
-          style="display:block;background:linear-gradient(135deg,#046A38,#034f2a);color:#fff;font-size:.9rem;font-weight:700;padding:14px 20px;border-radius:12px;text-decoration:none;letter-spacing:.3px;box-shadow:0 4px 20px rgba(4,106,56,.35)">
+          class="rc-gate-setup-btn">
           Create Your Identity
         </a>
-        <button id="rcGateSkipBtn" onclick="rcGateSkip()" style="display:none;margin-top:12px;width:100%;background:transparent;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);font-size:.8rem;padding:10px;border-radius:10px;cursor:pointer">
+        <button id="rcGateSkipBtn" class="rc-gate-skip-btn" onclick="rcGateSkip()" style="display:none">
           I already set it up — Continue
         </button>
       </div>
@@ -787,10 +788,10 @@
               <button class="rc-key-copy-btn" onclick="rcCopyKey('newPrivKey', this)" aria-label="Copy private key">Copy</button>
             </div>
 
-            <div class="rc-key-card" style="border-color:rgba(74,222,128,.25)">
+            <div class="rc-key-card rc-key-card--address">
               <div class="rc-key-label">Your Address</div>
               <div id="newAddress" class="rc-addr-value"></div>
-              <button class="rc-key-copy-btn" style="color:#4ade80;border-color:rgba(74,222,128,.2)" onclick="rcCopyKey('newAddress', this)" aria-label="Copy address">Copy</button>
+              <button class="rc-key-copy-btn rc-key-copy-btn--address" onclick="rcCopyKey('newAddress', this)" aria-label="Copy address">Copy</button>
             </div>
 
             <button class="rc-btn" onclick="rcConfirmWallet()">
@@ -804,12 +805,11 @@
           <div id="importMsg" class="rc-msg"></div>
           <p class="rc-auth-hint">Paste your 64-character hex private key to restore access to an existing wallet.</p>
           <label class="rc-label" for="importKey">Private Key (64-char hex)</label>
-          <input class="rc-field" id="importKey" type="password"
+          <input class="rc-field rc-field-import-key" id="importKey" type="password"
             placeholder="Paste your private key…"
-            autocomplete="off"
-            style="font-family:monospace;font-size:.8rem;letter-spacing:.5px" />
+            autocomplete="off" />
           <button class="rc-btn" id="importBtn" onclick="rcDoImport()">Import Wallet</button>
-          <button class="rc-btn-ghost" style="margin-top:8px" onclick="rcAuthSwitch('create')">
+          <button class="rc-btn-ghost rc-mt-xs" onclick="rcAuthSwitch('create')">
             Don't have a wallet? Create one
           </button>
         </div>
@@ -855,10 +855,9 @@
       <div class="rc-card">
         <div id="sendMsg" class="rc-msg"></div>
         <label class="rc-label" for="sendTo">Recipient Address</label>
-        <input class="rc-field" id="sendTo" type="text"
+        <input class="rc-field rc-field-send-to" id="sendTo" type="text"
           placeholder="RC address (e.g. R3xF8…)"
-          autocomplete="off"
-          style="font-family:monospace;font-size:.78rem" />
+          autocomplete="off" />
         <label class="rc-label" for="sendAmount">Amount (RC)</label>
         <input class="rc-field" id="sendAmount" type="number" min="1" step="1" placeholder="e.g. 100" />
         <div class="rc-avail">Available: <strong id="sendAvail">—</strong> RC</div>
@@ -876,7 +875,7 @@
           <button class="rc-btn" onclick="rcCopyAddress()">Copy Address</button>
         </div>
       </div>
-      <div class="rc-card" style="font-size:.82rem;opacity:.6;line-height:1.65">
+      <div class="rc-card rc-card--muted-note">
         Share this address to receive RupeeCoin. Every transaction is recorded on the chain and verifiable by anyone.
       </div>
     </div>
@@ -889,7 +888,7 @@
           <button class="rc-filter-btn"        id="filterIn"  onclick="rcFilter('in')">Received</button>
           <button class="rc-filter-btn"        id="filterOut" onclick="rcFilter('out')">Sent</button>
         </div>
-        <div id="histLoading" style="display:none;font-size:.78rem;opacity:.32;text-align:center;padding:28px 0">
+        <div id="histLoading" class="rc-loading-row" style="display:none">
           <span class="rc-spinner"></span>Loading…
         </div>
         <ul class="rc-tx-list" id="txList" aria-label="Transaction history"></ul>
@@ -906,7 +905,7 @@
         <div class="rc-stat-cell"><div class="rc-stat-label">Block</div><div class="rc-stat-value" id="statHeight">—</div></div>
       </div>
       <div class="rc-card">
-        <div id="blocksLoading" style="display:none;font-size:.78rem;opacity:.32;text-align:center;padding:28px 0">
+        <div id="blocksLoading" class="rc-loading-row" style="display:none">
           <span class="rc-spinner"></span>Loading…
         </div>
         <div id="blocksList" aria-label="Recent blocks"></div>
@@ -972,14 +971,14 @@
 <!-- Toast container -->
 <div class="rc-toast-wrap" id="rcToastWrap" aria-live="polite"></div>
 
-<!-- noble/secp256k1 for client-side ECDSA signing -->
-<script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@1.7.1/lib/index.js"></script>
+<!-- noble/secp256k1 for client-side ECDSA signing (vendored local UMD build — see wallet/js/vendor/README) -->
+<script src="js/vendor/noble-secp256k1.min.js"></script>
 <script>
   if (typeof secp256k1 !== 'undefined') window.nobleSecp256k1 = secp256k1;
   else if (typeof nobleSecp256k1 === 'undefined') window.nobleSecp256k1 = null;
   window.RC_NODE_URL = 'http://localhost:8080';
 </script>
-<script src="js/rupeecoin.js?v=20260917"></script>
+<script src="js/rupeecoin.js?v=20260917e"></script>
 <script>
 'use strict';
 
@@ -1350,7 +1349,7 @@ function rcLoadBlocks() {
   RC.blocks(function(res) {
     loading.style.display = 'none';
     if (!res || !res.ok || !res.blocks || !res.blocks.length) {
-      wrap.innerHTML = '<div style="font-size:.78rem;opacity:.28;text-align:center;padding:24px 0">No blocks yet.</div>';
+      wrap.innerHTML = '<div class="rc-blocks-empty">No blocks yet.</div>';
       return;
     }
     res.blocks.forEach(function(b) {
@@ -1408,8 +1407,8 @@ function rcSignOut() {
 }
 </script>
 
-<script src="js/nav.js?v=20260917" defer></script>
+<script src="js/nav.js?v=20260917e" defer></script>
 <script src="js/footer.js" defer></script>
-<script src="js/script.js?v=20260917" defer></script>
+<script src="js/script.js?v=20260917e" defer></script>
 </body>
 </html>

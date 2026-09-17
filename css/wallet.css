@@ -594,6 +594,19 @@ body.theme-dark .wallet-empty { color: rgba(255,255,255,0.4); }
   flex-shrink: 0;
 }
 
+/* ── Extracted inline styles ── */
+.wlt-static-hidden { display: none; }
+.wlt-action-row--centered { justify-content: center; margin-top: 1.25rem; }
+.wlt-key-metadata { margin-top: .75rem; font-size: .8rem; opacity: .6; }
+.wlt-form--tight { margin-top: 1rem; }
+.wlt-mt-sm { margin-top: .75rem; }
+.wlt-devices-container { margin-top: 1rem; }
+.wlt-layer-grid--gap-bottom { margin-bottom: 2rem; }
+.wlt-rc-connect { max-width: 480px; }
+.wlt-rc-heading { margin: 0 0 .5rem; font-size: 1.1rem; font-weight: 700; }
+.wlt-rc-desc { font-size: .85rem; opacity: .65; margin-bottom: 1rem; }
+.wlt-stats--tight { margin: 0 0 1rem; }
+
 /* ── Responsive ── */
 @media (max-width: 960px) {
   .wlt-hero              { grid-template-columns: 1fr; padding-top: clamp(40px, 6vw, 80px); }
