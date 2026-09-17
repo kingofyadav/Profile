@@ -22,7 +22,7 @@
   width: 900px;
   height: 900px;
   background: radial-gradient(circle, rgba(4,106,56,0.13), transparent 70%);
-  z-index: -1;
+  z-index: var(--z-below);
   pointer-events: none;
   animation: floatGlow 16s ease-in-out infinite alternate;
 }
@@ -54,7 +54,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: var(--z-fixed);
   backdrop-filter: blur(24px) saturate(160%);
   transition: transform 0.4s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -629,7 +629,7 @@ body.theme-light .personal-page .life-card {
   inset: 0;
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(6px);
-  z-index: 2000;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -799,6 +799,7 @@ body.theme-light .pd-field textarea {
 .pd-btn-delete,
 .pd-btn-cancel,
 .pd-btn-save {
+  min-height: 44px;
   padding: 8px 18px;
   border-radius: 999px;
   font-size: 0.8rem;
@@ -807,6 +808,8 @@ body.theme-light .pd-field textarea {
   transition: all 0.2s ease;
   font-family: inherit;
   border: none;
+  display: inline-flex;
+  align-items: center;
 }
 
 .pd-btn-delete {
@@ -972,7 +975,7 @@ body.theme-light .pd-field textarea {
     overflow: hidden;
     padding: 0 10px;
     gap: 2px;
-    z-index: 999;
+    z-index: var(--z-overlay);
     border-radius: 18px;
     box-shadow: 0 18px 42px rgba(0,0,0,0.28);
     opacity: 0;
@@ -995,7 +998,7 @@ body.theme-light .pd-field textarea {
     overflow: hidden;
     padding: 0 10px;
     gap: 2px;
-    z-index: 999;
+    z-index: var(--z-overlay);
     border-radius: 18px;
     box-shadow: 0 18px 42px rgba(0,0,0,0.28);
     opacity: 0;
@@ -1157,7 +1160,9 @@ body.theme-light .pd-field textarea {
   .pd-btn-cancel,
   .pd-btn-save {
     width: 100%;
+    min-height: 44px;
     text-align: center;
+    justify-content: center;
     padding: 11px;
   }
 }
@@ -1634,3 +1639,98 @@ body.theme-light .profile-hero-panel {
   .personal-section:hover,
   .pd-card:hover { transform: none; }
 }
+
+/* ======================================================
+   ABOUT PAGE (pages/about.html) — extracted inline styles
+   Uses the page's own abt-* design system (defined inline
+   in about.html's <style> block; --abt-* custom properties
+   and #60a5fa accent are defined there and resolve here too)
+====================================================== */
+
+.abt-journey-head { margin-bottom: 18px; }
+.abt-journey-title { font-size: 1.3rem; }
+
+/* Shared sub-section heading used across Machine/Product/Coin sections */
+.abt-subsection-head { margin-bottom: 16px; }
+.abt-subsection-title { font-size: 1.15rem; }
+.abt-community-head { margin: 32px 0 16px; }
+
+.abt-philosophy-label { display: block; margin-bottom: 6px; color: #60a5fa; }
+.abt-coin-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.abt-coin-note { margin-top: 10px; color: var(--abt-muted); font-size: .8rem; line-height: 1.65; }
+.abt-loop-label { margin-bottom: 10px; }
+
+/* ======================================================
+   ORIGIN PAGE (pages/origin.html) — extracted inline styles
+   Uses the page's own ori-* design system (--ori-* custom
+   properties defined inline in origin.html's <style> block)
+====================================================== */
+
+.ori-panel-code { font-family: 'Courier New', monospace; color: var(--ori-green); letter-spacing: 1.5px; }
+.ori-section-head--tight { margin-bottom: 10px; }
+
+/* Step title color follows the step's own state instead of an inline color */
+.ori-step.active .ori-step-title { color: var(--ori-green); }
+.ori-step.prove .ori-step-title { color: var(--ori-orange); }
+
+.ori-step-label { display: block; margin-bottom: 6px; font-size: .74rem; }
+.ori-step-label-lg { display: block; margin-bottom: 8px; font-size: .74rem; }
+.ori-hdi-format-code { font-family: 'Courier New', monospace; font-size: .68rem; color: var(--ori-green); letter-spacing: 1px; }
+.ori-hdi-format-note { font-size: .64rem; color: var(--ori-label); }
+.ori-eco-grid--2col { grid-template-columns: 1fr 1fr; }
+
+/* ======================================================
+   BHAGALPUR PAGE (pages/bhagalpur.html) — extracted inline styles
+   Uses the page's own bhp-* design system (--bhp-* custom
+   properties defined inline in bhagalpur.html's <style> block)
+====================================================== */
+
+.bhp-stats--spaced { margin: 24px 0 52px; }
+.bhp-section-head--tight { margin-bottom: 10px; }
+
+/* #f87171 is the existing "danger/alert" accent already used for
+   tag-red style elements elsewhere — not a brand-green/orange substitute */
+.bhp-sitemap-group--danger { border-left-color: #f87171; }
+.bhp-sitemap-group-title--danger { color: #f87171; }
+
+.bhp-text-block--spaced { margin-bottom: 20px; }
+.bhp-status-pill--spaced { margin-bottom: 12px; display: inline-flex; }
+
+.bhp-edu-intro { color: var(--bhp-muted); font-size: .9rem; line-height: 1.7; margin: 0 0 20px; }
+.bhp-edu-note {
+  color: var(--bhp-muted);
+  font-size: .82rem;
+  line-height: 1.65;
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--bhp-border);
+  border-radius: 10px;
+  background: var(--bhp-card);
+}
+.bhp-personal-fact--spaced { margin-left: 8px; }
+
+/* ======================================================
+   HAVEN PAGE (pages/haven.html) — extracted inline styles
+   Uses the page's own hav-* design system (--hav-* custom
+   properties defined inline in haven.html's <style> block)
+====================================================== */
+
+.hav-section-head--tight { margin-bottom: 10px; }
+.hav-section-head--sm { margin-bottom: 12px; }
+.hav-section-head--divider { margin-top: 28px; margin-bottom: 12px; }
+.hav-subsection-title { font-size: 1.1rem; }
+
+.hav-inline-code { font-size: .82em; }
+.hav-inline-code-sm { font-size: .7em; }
+
+.hav-step-label { display: block; margin-bottom: 6px; font-size: .74rem; }
+
+.hav-code-pill--orange { color: var(--hav-orange); background: rgba(255,103,31,.1); }
+.hav-code-comment { color: var(--hav-label); font-size: .7em; }
+.hav-guard-sep { color: var(--hav-label); font-size: .85rem; padding: 0 4px; }
+.hav-sha-output-size { font-size: .62rem; }
+
+.hav-lead { color: var(--hav-muted); font-size: .9rem; line-height: 1.7; margin: 0 0 4px; }
+.hav-lead--wide { margin: 0 0 20px; }
+
+.hav-grid4--5col { grid-template-columns: repeat(5, 1fr); }

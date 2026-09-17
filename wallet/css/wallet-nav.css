@@ -204,6 +204,12 @@ body.theme-light .wallet-nav a[aria-current="page"] {
 .rc-hdr-badge strong {
   color: #fff;
 }
+.rc-hdr-badge .rc-hdr-user {
+  opacity: 0.6;
+}
+.rc-hdr-badge .rc-hdr-bal {
+  color: var(--rc-accent-green, #4ade80);
+}
 
 body.theme-light .rc-hdr-badge {
   background: rgba(4, 106, 56, 0.08);

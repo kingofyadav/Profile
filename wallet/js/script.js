@@ -1,3 +1,4 @@
+(function () {
 "use strict";
 
 /* ======================================================
@@ -1779,3 +1780,5 @@ document.addEventListener("DOMContentLoaded", () => {
   const year = $("year");
   if (year) year.textContent = new Date().getFullYear();
 });
+
+})();

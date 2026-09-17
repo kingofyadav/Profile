@@ -50,7 +50,7 @@ body.lc-page {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: var(--z-dropdown);
   height: var(--lc-status-h);
   background: rgba(4, 16, 6, .94);
   border-bottom: 1px solid rgba(255,255,255,.07);
@@ -112,7 +112,7 @@ body.lc-page {
   top: var(--lc-status-h);
   left: 0;
   right: 0;
-  z-index: 90;
+  z-index: var(--z-raised);
   height: var(--lc-header-h);
   display: flex;
   align-items: center;
@@ -951,9 +951,9 @@ kbd {
 /* ── Toast Notifications ── */
 .lc-toast-area {
   position: fixed;
-  bottom: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
   right: 24px;
-  z-index: 200;
+  z-index: var(--z-toast);
   display: grid;
   gap: 10px;
   pointer-events: none;
@@ -1004,7 +1004,7 @@ kbd {
 .lc-drawer-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 150;
+  z-index: var(--z-overlay);
   background: rgba(0,0,0,.6);
   backdrop-filter: blur(4px);
   animation: lc-fade-in .2s ease both;
@@ -1020,11 +1020,11 @@ kbd {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 160;
+  z-index: var(--z-modal);
   background: var(--lc-dark-bg);
   border-top: 1px solid var(--lc-dark-border);
   border-radius: var(--lc-radius) var(--lc-radius) 0 0;
-  padding: 20px clamp(16px, 4vw, 28px) clamp(24px, 6vw, 40px);
+  padding: 20px clamp(16px, 4vw, 28px) max(clamp(24px, 6vw, 40px), env(safe-area-inset-bottom));
   box-shadow: 0 -24px 60px rgba(0,0,0,.5);
   animation: lc-drawer-in .28s cubic-bezier(.22,.68,0,1.2) both;
 }

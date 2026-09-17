@@ -30,7 +30,7 @@
   height: 680px;
   background: radial-gradient(circle, rgba(4,106,56,0.15), transparent 70%);
   filter: blur(80px);
-  z-index: -1;
+  z-index: var(--z-below);
   pointer-events: none;
 }
 
@@ -216,6 +216,21 @@ body.theme-light .blog-card {
 }
 
 .blog-read:hover { gap: 10px; }
+
+/* Card meta row — category pill + published date (blog library grid) */
+.blog-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.blog-card-time {
+  font-size: 0.72rem;
+  opacity: 0.45;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
 
 
 /* ======================================================

@@ -4,6 +4,7 @@
 ====================================================== */
 
 body.wallet-app {
+  --rc-accent-green: #4ade80;
   --wallet-shell-bg: rgba(11, 13, 13, 0.74);
   --wallet-shell-border: rgba(255, 255, 255, 0.1);
   --wallet-panel-bg: rgba(255, 255, 255, 0.055);
@@ -800,3 +801,99 @@ body.theme-light.wallet-overview-page .wallet-suite-rail span {
     letter-spacing: .7px;
   }
 }
+
+/* ======================================================
+   EXTRACTED INLINE STYLES — RC Wallet (wallet/wallet.html)
+====================================================== */
+.rc-hdr-badge.rc-hdr-badge--compact {
+  padding: 6px 12px;
+  font-size: .78rem;
+  border-radius: 99px;
+  background: rgba(4, 106, 56, .2);
+}
+.rc-auth-card--centered { text-align: center; }
+.rc-gate-hdi-display { margin-bottom: 20px; }
+.rc-gate-hdi-label {
+  font-size: .72rem;
+  opacity: .5;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.rc-gate-hdi-code {
+  font-family: monospace;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--rc-accent-green);
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  background: rgba(74, 222, 128, .08);
+  border: 1px solid rgba(74, 222, 128, .2);
+  border-radius: 10px;
+  word-break: break-all;
+}
+.rc-gate-icon-wrap {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(4, 106, 56, .5), rgba(255, 103, 31, .35));
+  border: 1px solid rgba(4, 106, 56, .4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 20px;
+}
+.rc-gate-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
+.rc-gate-msg { font-size: .85rem; opacity: .65; line-height: 1.6; margin-bottom: 24px; }
+.rc-gate-setup-btn {
+  display: block;
+  background: linear-gradient(135deg, var(--brand-green), var(--brand-green-deep));
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 700;
+  padding: 14px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  letter-spacing: .3px;
+  box-shadow: 0 4px 20px rgba(4, 106, 56, .35);
+}
+.rc-gate-skip-btn {
+  margin-top: 12px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .12);
+  color: rgba(255, 255, 255, .5);
+  font-size: .8rem;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.rc-key-card.rc-key-card--address { border-color: rgba(74, 222, 128, .25); }
+.rc-key-copy-btn.rc-key-copy-btn--address {
+  color: var(--rc-accent-green);
+  border-color: rgba(74, 222, 128, .2);
+}
+.rc-field.rc-field-import-key { font-family: monospace; font-size: .8rem; letter-spacing: .5px; }
+.rc-field.rc-field-send-to { font-family: monospace; font-size: .78rem; }
+.rc-mt-xs { margin-top: var(--space-xs); }
+.rc-card--muted-note { font-size: .82rem; opacity: .6; line-height: 1.65; }
+.rc-loading-row { font-size: .78rem; opacity: .32; text-align: center; padding: 28px 0; }
+.rc-blocks-empty { font-size: .78rem; opacity: .28; text-align: center; padding: 24px 0; }
+
+/* ======================================================
+   EXTRACTED INLINE STYLES — RC Vault (wallet/vault.html)
+====================================================== */
+.vault-gate-title { margin: 0 0 10px; font-size: 1.5rem; font-weight: 800; }
+.vault-btn--link { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.vault-info-row.vault-info-row--no-border { border-bottom: none; }
+.vault-info-row--center { align-items: center; }
+.vault-info-row.vault-info-row--top-gap { padding-top: 14px; }
+.vault-field.vault-field--file { padding: 9px 14px; cursor: pointer; }
+.vault-signin-link {
+  font-size: .82rem;
+  color: var(--rc-accent-green);
+  text-decoration: none;
+  font-weight: 700;
+}
+.vault-actions-block { margin-top: 18px; }

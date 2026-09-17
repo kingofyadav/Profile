@@ -105,7 +105,6 @@ img.fx-blur-img.fx-blur-loaded {
   height: 3px;
   width: 0%;
   background: linear-gradient(90deg, var(--brand-green, #046A38), var(--brand-orange, #FF671F));
-  z-index: 1001;
   border-radius: 0 2px 2px 0;
   transition: width 0.08s linear;
   pointer-events: none;
@@ -173,7 +172,7 @@ body.theme-light .fx-skel {
 #fx-gradient-mesh {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-below);
   pointer-events: none;
   opacity: 1;
   background:
@@ -211,7 +210,7 @@ body.theme-light #fx-gradient-mesh {
 .fx-theme-flash {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: var(--z-top);
   pointer-events: none;
   background: var(--brand-green, #046A38);
   animation: fx-theme-flash 0.32s ease forwards;
@@ -349,7 +348,7 @@ body.theme-light .fx-blog-search-bar {
 .pro-section-label {
   position: sticky;
   top: 76px; /* desktop header height */
-  z-index: 50;
+  z-index: var(--z-raised);
   padding: 5px 16px 5px 26px;
   border-radius: 999px;
   backdrop-filter: blur(14px) saturate(160%);
@@ -374,7 +373,7 @@ body.theme-light .pro-section-label {
 @media (max-width: 768px) {
   .abt-section-label,
   .pro-section-label {
-    top: 70px; /* mobile header min-height: 70px */
+    top: var(--zs-header-height, 72px); /* mobile header height (layout.css --zs-header-height, 72px in this range) */
   }
 }
 
@@ -384,14 +383,14 @@ body.theme-light .pro-section-label {
 #fx-particle-canvas {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-base);
   pointer-events: none;
   opacity: 0.6;
 }
 
 .home-intro .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 
@@ -451,7 +450,7 @@ body.theme-light .pro-section-label {
   background: radial-gradient(circle, var(--glow-color, rgba(4,106,56,0.06)) 0%, transparent 65%);
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 1;
+  z-index: var(--z-raised);
   transition: background 0.3s ease;
   will-change: left, top;
 }
@@ -469,7 +468,7 @@ body.theme-light .pro-section-label {
   transform: translate(-50%, -50%) scale(0);
   background: radial-gradient(circle, rgba(4,106,56,0.18) 0%, rgba(4,106,56,0.04) 40%, transparent 70%);
   pointer-events: none;
-  z-index: 9997;
+  z-index: var(--z-top);
   animation: fx-logo-ripple 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -500,7 +499,7 @@ body.theme-light .pro-section-label {
   height: 7px;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: var(--z-top);
   transform: translate(-50%, -50%);
   opacity: 1;
   animation: fx-particle-burst 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;

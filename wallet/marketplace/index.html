@@ -8,11 +8,12 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" href="../favicon/favicon.ico" />
   <meta name="theme-color" content="#046A38" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="../css/wallet-nav.css?v=20260917" />
-  <link rel="stylesheet" href="../css/wallet-app.css?v=20260917" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="/wallet/css/wallet-nav.css?v=20260917e" />
+  <link rel="stylesheet" href="/wallet/css/wallet-app.css?v=20260917e" />
 
   <style>
     /* ── Page layout ── */
@@ -495,14 +496,14 @@
   <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15" /></svg>
 </button>
 
-<!-- noble/secp256k1 for client-side ECDSA signing -->
-<script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@1.7.1/lib/index.js"></script>
+<!-- noble/secp256k1 for client-side ECDSA signing (vendored local UMD build — see wallet/js/vendor/README) -->
+<script src="/wallet/js/vendor/noble-secp256k1.min.js"></script>
 <script>
   if (typeof secp256k1 !== 'undefined') window.nobleSecp256k1 = secp256k1;
   else if (typeof nobleSecp256k1 === 'undefined') window.nobleSecp256k1 = null;
   window.RC_NODE_URL = 'http://localhost:8080'; /* Change to production node URL when deployed */
 </script>
-<script src="../js/rupeecoin.js?v=20260917"></script>
+<script src="/wallet/js/rupeecoin.js?v=20260917e"></script>
 <script>
 (function () {
   'use strict';
@@ -753,8 +754,8 @@
 }());
 </script>
 
-<script src="../js/nav.js?v=20260917" defer></script>
-<script src="../js/footer.js" defer></script>
-<script src="../js/script.js?v=20260917" defer></script>
+<script src="/wallet/js/nav.js?v=20260917e" defer></script>
+<script src="/wallet/js/footer.js" defer></script>
+<script src="/wallet/js/script.js?v=20260917e" defer></script>
 </body>
 </html>

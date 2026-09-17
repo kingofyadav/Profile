@@ -10,13 +10,14 @@
   <link rel="icon" href="favicon/favicon.ico" />
   <link rel="apple-touch-icon" href="favicon/apple-touch-icon.png" />
 
-  <link rel="preload" href="/css/base.css?v=20260917" as="style" />
-  <link rel="preload" href="/css/components.css?v=20260917" as="style" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="css/wallet-nav.css?v=20260917" />
-  <link rel="stylesheet" href="css/wallet-app.css?v=20260917" />
+  <link rel="preload" href="/css/base.css?v=20260917e" as="style" />
+  <link rel="preload" href="/css/components.css?v=20260917e" as="style" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="css/wallet-nav.css?v=20260917e" />
+  <link rel="stylesheet" href="css/wallet-app.css?v=20260917e" />
 
   <style>
     /* ── Container ── */
@@ -320,10 +321,10 @@
     <div id="vaultAuthGate">
       <div class="vault-gate-icon">🔐</div>
       <p class="vault-kicker">RC Vault</p>
-      <h2 style="margin:0 0 10px;font-size:1.5rem;font-weight:800;">Backup &amp; Security</h2>
+      <h2 class="vault-gate-title">Backup &amp; Security</h2>
       <p class="vault-gate-note">Sign in with your RC Wallet to access your vault — export wallet data, import from backup, and manage your account.</p>
       <div id="vaultGateMsg" class="vault-msg"></div>
-      <a href="wallet.html" class="vault-btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Sign in with RC Wallet</a>
+      <a href="wallet.html" class="vault-btn vault-btn--link">Sign in with RC Wallet</a>
     </div>
 
     <!-- ── Vault content (shown when logged in) ── -->
@@ -386,7 +387,7 @@
           <span class="vault-info-label">Block Time</span>
           <span class="vault-info-value" id="vaultInfoBlockTime">—</span>
         </div>
-        <div class="vault-info-row" style="border-bottom:none">
+        <div class="vault-info-row vault-info-row--no-border">
           <span class="vault-info-label">Network Status</span>
           <span id="vaultNetStatus"><span class="vault-net-badge">Checking…</span></span>
         </div>
@@ -410,7 +411,7 @@
           <h2>Import Wallet</h2>
           <p class="vault-card-desc">If you have an exported JSON file, you can view the transaction history from it. To fully restore, you still need your wallet name and PIN.</p>
           <div id="vaultImportMsg" class="vault-msg"></div>
-          <input id="vaultImportFile" class="vault-field" type="file" accept=".json" style="padding:9px 14px;cursor:pointer" />
+          <input id="vaultImportFile" class="vault-field vault-field--file" type="file" accept=".json" />
           <div id="vaultImportPreview" class="vault-import-preview"></div>
           <button id="vaultImportPrefill" class="vault-btn ghost" style="display:none" onclick="vaultPrefillLogin()">Pre-fill Login with This Wallet</button>
         </div>
@@ -421,15 +422,15 @@
       <div class="vault-card">
         <p class="vault-section-kicker">Account Actions</p>
         <h2>Manage Account</h2>
-        <div class="vault-info-row" style="align-items:center">
+        <div class="vault-info-row vault-info-row--center">
           <span class="vault-info-label">Signed in as</span>
           <span class="vault-info-value" id="vaultActionsName">—</span>
         </div>
-        <div class="vault-info-row" style="align-items:center;border-bottom:none;padding-top:14px">
+        <div class="vault-info-row vault-info-row--center vault-info-row--no-border vault-info-row--top-gap">
           <span class="vault-info-label">Switch or sign in with a different wallet</span>
-          <a href="index.html" style="font-size:.82rem;color:#4ade80;text-decoration:none;font-weight:700">Go to Sign In →</a>
+          <a href="index.html" class="vault-signin-link">Go to Sign In →</a>
         </div>
-        <div style="margin-top:18px">
+        <div class="vault-actions-block">
           <div id="vaultSignOutMsg" class="vault-msg"></div>
           <button class="vault-btn danger" onclick="vaultSignOut()">Sign Out</button>
         </div>
@@ -445,14 +446,14 @@
     <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <!-- noble/secp256k1 for client-side ECDSA signing -->
-  <script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@1.7.1/lib/index.js"></script>
+  <!-- noble/secp256k1 for client-side ECDSA signing (vendored local UMD build — see wallet/js/vendor/README) -->
+  <script src="js/vendor/noble-secp256k1.min.js"></script>
   <script>
     if (typeof secp256k1 !== 'undefined') window.nobleSecp256k1 = secp256k1;
     else if (typeof nobleSecp256k1 === 'undefined') window.nobleSecp256k1 = null;
     window.RC_NODE_URL = 'http://localhost:8080';
   </script>
-  <script src="js/rupeecoin.js?v=20260917"></script>
+  <script src="js/rupeecoin.js?v=20260917e"></script>
   <script>
   "use strict";
 
@@ -613,8 +614,8 @@
   </script>
 
   
-  <script src="js/nav.js?v=20260917" defer></script>
+  <script src="js/nav.js?v=20260917e" defer></script>
   <script src="js/footer.js" defer></script>
-  <script src="js/script.js?v=20260917" defer></script>
+  <script src="js/script.js?v=20260917e" defer></script>
 </body>
 </html>

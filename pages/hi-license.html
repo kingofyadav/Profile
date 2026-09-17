@@ -18,12 +18,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#046A38" />
   <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="/css/personal.css?v=20260917" />
-  <link rel="stylesheet" href="/css/auth.css?v=20260917" />
-  <link rel="stylesheet" href="/css/hi-app.css?v=20260917" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/personal.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/auth.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/hi-app.css?v=20260917e" />
   <style>
     /* ── Page layout ── */
     .ipv-wrap { max-width: 1200px; margin: 0 auto; padding: 2rem clamp(1rem,4vw,2.5rem) 5rem; }
@@ -164,8 +165,8 @@
 </head>
 <body class="theme-dark personal-page">
 
-<script src="/js/site-init.js?v=20260917"></script>
-<script src="/js/auth.js?v=20260917"></script>
+<script src="/js/site-init.js?v=20260917e"></script>
+<script src="/js/auth.js?v=20260917e"></script>
 <script>requireAuth(); document.documentElement.style.visibility="";</script>
 
 <a href="#main-content" class="skip-link">Skip to content</a>
@@ -202,18 +203,18 @@
       <div class="ipv-stat"><div class="ipv-stat-num" id="statPublished">—</div><div class="ipv-stat-lbl">Published</div></div>
       <div class="ipv-stat"><div class="ipv-stat-num" id="statBlogPosts">—</div><div class="ipv-stat-lbl">Blog Posts</div></div>
       <div class="ipv-stat"><div class="ipv-stat-num" id="statLocal">—</div><div class="ipv-stat-lbl">Manual Claims</div></div>
-      <div class="ipv-stat" id="statVaultWrap" style="cursor:pointer" onclick="location.href='/pages/vault.html'">
-        <div class="ipv-stat-num" id="statVault" style="font-size:1rem">—</div>
+      <div class="ipv-stat hi-vault-stat-clickable" id="statVaultWrap" onclick="location.href='/pages/vault.html'">
+        <div class="ipv-stat-num hi-vault-stat-num" id="statVault">—</div>
         <div class="ipv-stat-lbl">Last Vault Backup</div>
       </div>
     </div>
 
     <!-- Stale-backup warning (shown if never backed up or >7 days old) -->
-    <div id="vaultWarnBanner" style="display:none;max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)">
-      <a href="/pages/vault.html" style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1.1rem;border-radius:10px;border:1px solid rgba(255,103,31,.35);background:rgba(255,103,31,.07);text-decoration:none;font-size:.8rem;color:inherit;margin-bottom:1rem">
-        <span style="font-size:1.2rem">⚠️</span>
-        <span id="vaultWarnMsg" style="flex:1">Your licenses have never been backed up — open HI Vault to export an encrypted backup.</span>
-        <span style="color:var(--brand-orange);font-weight:700;white-space:nowrap">Back Up Now →</span>
+    <div id="vaultWarnBanner" class="hi-vault-warn-banner">
+      <a href="/pages/vault.html" class="hi-vault-warn-link">
+        <span class="hi-vault-warn-icon">⚠️</span>
+        <span id="vaultWarnMsg" class="hi-vault-warn-msg">Your licenses have never been backed up — open HI Vault to export an encrypted backup.</span>
+        <span class="hi-vault-warn-cta">Back Up Now →</span>
       </a>
     </div>
   </div>
@@ -251,7 +252,7 @@
           <div class="hi-claim-row">
             <div class="hi-field">
               <label for="hi-claim-content-type">Content Type</label>
-              <select id="hi-claim-content-type" class="hi-priority-select" style="width:100%">
+              <select id="hi-claim-content-type" class="hi-priority-select">
                 <option value="Idea">Idea</option>
                 <option value="Blog Post">Blog Post</option>
                 <option value="Project">Project</option>
@@ -264,7 +265,7 @@
             </div>
             <div class="hi-field">
               <label for="hi-claim-license-type">License Type</label>
-              <select id="hi-claim-license-type" class="hi-priority-select" style="width:100%"><!-- populated by hi-license.js --></select>
+              <select id="hi-claim-license-type" class="hi-priority-select"><!-- populated by hi-license.js --></select>
             </div>
           </div>
           <div class="hi-field">
@@ -274,8 +275,8 @@
           <div class="hi-field">
             <label for="hi-claim-media">Media File <small>(optional — generates invisible watermark &amp; fingerprint)</small></label>
             <input type="file" id="hi-claim-media" accept="image/*,video/*"
-              style="width:100%;padding:.45rem .7rem;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:inherit;font-size:.8rem;cursor:pointer;" />
-            <div id="hi-claim-phash-status" style="font-size:.71rem;color:rgba(255,255,255,.35);margin-top:.3rem;min-height:1.1em;"></div>
+              class="hi-claim-media-input" />
+            <div id="hi-claim-phash-status" class="hi-phash-status"></div>
           </div>
           <div id="hi-claim-err" class="hi-modal-err"></div>
           <button type="submit" class="hi-btn-primary">Claim &amp; Generate License ⚡</button>
@@ -352,12 +353,12 @@
       <div class="ipv-section-head">
         <span class="ipv-section-title">✍️ Blog License Registry</span>
       </div>
-      <p style="font-size:0.82rem;color:rgba(255,255,255,.5);margin-bottom:1rem;">
+      <p class="hi-seed-blog-desc">
         Auto-register all 20 published blog posts as IP licenses in the cloud registry. Safe to run multiple times — existing entries are skipped.
       </p>
       <div class="ipv-tools">
         <button type="button" class="hi-btn-primary" id="hiSeedBlogsBtn">⚡ Seed All Blog Licenses</button>
-        <span id="hiSeedBlogsStatus" style="font-size:0.82rem;margin-left:0.75rem;"></span>
+        <span id="hiSeedBlogsStatus" class="hi-seed-status"></span>
       </div>
     </div>
 
@@ -368,10 +369,10 @@
       </div>
       <div class="ipv-tools">
         <button type="button" class="hi-btn-primary" id="hiExportAllBtn">Export HI Backup</button>
-        <label class="hi-contact-btn hi-import-label" for="hiImportFile" style="cursor:pointer">Import Backup</label>
+        <label class="hi-contact-btn hi-import-label" for="hiImportFile">Import Backup</label>
         <input id="hiImportFile" type="file" accept="application/json,.json" hidden />
       </div>
-      <div id="hi-sync-status" class="hi-sync-status" role="status" aria-live="polite" style="margin-top:0.75rem"></div>
+      <div id="hi-sync-status" class="hi-sync-status hi-sync-status-backup" role="status" aria-live="polite"></div>
     </div>
 
   </div><!-- /ipv-wrap -->
@@ -379,16 +380,16 @@
 
 <footer class="site-footer glass" data-footer></footer>
 
-<script src="/js/nav.js?v=20260917" defer></script>
-<script src="/js/footer.js?v=20260917" defer></script>
-<script src="/js/script.js?v=20260917" defer></script>
-<script src="/js/hi-storage.js?v=20260917"></script>
-<script src="/js/hi-api.js?v=20260917"></script>
-<script src="/js/hi-identity-crypto.js?v=20260917" defer></script>
-<script src="/js/hi-app.js?v=20260917" defer></script>
-<script src="/js/hi-license.js?v=20260917" defer></script>
-<script src="/js/hi-sync.js?v=20260917" defer></script>
-<script src="/js/hi-watermark.js?v=20260917" defer></script>
+<script src="/js/nav.js?v=20260917e" defer></script>
+<script src="/js/footer.js?v=20260917e" defer></script>
+<script src="/js/script.js?v=20260917e" defer></script>
+<script src="/js/hi-storage.js?v=20260917e"></script>
+<script src="/js/hi-api.js?v=20260917e"></script>
+<script src="/js/hi-identity-crypto.js?v=20260917e" defer></script>
+<script src="/js/hi-app.js?v=20260917e" defer></script>
+<script src="/js/hi-license.js?v=20260917e" defer></script>
+<script src="/js/hi-sync.js?v=20260917e" defer></script>
+<script src="/js/hi-watermark.js?v=20260917e" defer></script>
 <script>
   /* Auth UI */
   var _u = document.getElementById("authUserDisplay");

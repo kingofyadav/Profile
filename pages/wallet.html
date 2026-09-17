@@ -18,11 +18,12 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#046A38" />
   <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-  <link rel="stylesheet" href="/css/base.css?v=20260917" />
-  <link rel="stylesheet" href="/css/components.css?v=20260917" />
-  <link rel="stylesheet" href="/css/layout.css?v=20260917" />
-  <link rel="stylesheet" href="/css/wallet.css?v=20260917" />
-  <link rel="stylesheet" href="/css/auth.css?v=20260917" />
+  <link rel="stylesheet" href="/css/brand-tokens.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/base.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/components.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/layout.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/wallet.css?v=20260917e" />
+  <link rel="stylesheet" href="/css/auth.css?v=20260917e" />
   <meta name="author" content="Amit Ku Yadav" />
   <meta property="og:site_name" content="Amit Ku Yadav" />
   <meta name="twitter:card"        content="summary_large_image" />
@@ -36,8 +37,8 @@
 </head>
 
 <body class="theme-dark">
-  <script src="/js/auth.js?v=20260917"></script>
-  <script src="/js/site-init.js?v=20260917"></script>
+  <script src="/js/auth.js?v=20260917e"></script>
+  <script src="/js/site-init.js?v=20260917e"></script>
   <script>
     requireAuth()
     document.documentElement.style.visibility = ''
@@ -47,23 +48,23 @@
   <a href="#main-content" class="skip-link">Skip to content</a>
 
   <header class="site-header glass" id="site-header"></header>
-  <script src="/js/nav.js?v=20260917"></script>
+  <script src="/js/nav.js?v=20260917e"></script>
 
   <main class="site-main wlt-page zs-public-page" id="main-content">
 
     <!-- ══ LOADING ══ -->
-    <div id="wltLoadingState" class="wlt-loading" style="display:none" aria-live="polite">
+    <div id="wltLoadingState" class="wlt-loading wlt-static-hidden" aria-live="polite">
       <div class="wlt-loading-dot"></div>
       <p>Loading wallet…</p>
     </div>
 
     <!-- ══ LOCKED ══ -->
-    <div id="walletLocked" class="wlt-locked" style="display:none">
+    <div id="walletLocked" class="wlt-locked wlt-static-hidden">
       <div class="wlt-locked-icon">🔒</div>
       <p class="wlt-kicker">Identity Required</p>
       <h2>Create your HI identity first.</h2>
       <p>HI coin generation unlocks only after your Human Digital Identity is saved. The wallet binds coins to your HDI and browser device identity.</p>
-      <div class="wlt-action-row" style="justify-content:center;margin-top:1.25rem">
+      <div class="wlt-action-row wlt-action-row--centered">
         <a class="wlt-btn primary" href="/pages/personal.html">Go to Personal</a>
         <a class="wlt-btn" href="/pages/hi-license.html">IP Vault</a>
       </div>
@@ -141,13 +142,13 @@
             <div><span>Session</span><strong id="walletSessionStatus">—</strong></div>
             <div><span>Risk</span><strong id="walletRiskStatus">—</strong></div>
           </div>
-          <div id="walletKeyMetadata" style="margin-top:.75rem;font-size:.8rem;opacity:.6"></div>
-          <form class="wlt-form wallet-form" id="walletSecurityForm" style="margin-top:1rem">
+          <div id="walletKeyMetadata" class="wlt-key-metadata"></div>
+          <form class="wlt-form wallet-form wlt-form--tight" id="walletSecurityForm">
             <div class="wlt-field">
               <label for="walletPassphrase">Passphrase</label>
               <input id="walletPassphrase" type="password" placeholder="Enter passphrase" autocomplete="current-password" />
             </div>
-            <div class="wlt-action-row" style="margin-top:.75rem">
+            <div class="wlt-action-row wlt-mt-sm">
               <button class="wlt-btn primary" type="submit">Unlock Key</button>
               <button class="wlt-btn" type="button" id="walletProtectKey">Protect Key</button>
               <button class="wlt-btn" type="button" id="walletLockKey">Lock</button>
@@ -167,8 +168,8 @@
             <div class="wlt-binding-item"><span>Wallet Type</span><strong>Personal HI Wallet</strong></div>
             <div class="wlt-binding-item"><span>Compliance</span><strong>Local prototype only</strong></div>
           </div>
-          <div id="walletDevicesContainer" style="margin-top:1rem"></div>
-          <div class="wlt-action-row" style="margin-top:.75rem">
+          <div id="walletDevicesContainer" class="wlt-devices-container"></div>
+          <div class="wlt-action-row wlt-mt-sm">
             <button class="wlt-btn wallet-form" id="walletTrustDevice">Trust Device</button>
             <button class="wlt-btn" id="walletRefreshDevices">Refresh</button>
           </div>
@@ -194,7 +195,7 @@
             <button class="wlt-btn wallet-form" type="button" id="walletCopyRecoveryPhrase">Copy Phrase</button>
           </div>
           <p id="walletRecoveryStatus" class="wallet-status" role="status"></p>
-          <form class="wlt-form wallet-form" id="walletRestoreForm" style="margin-top:1rem">
+          <form class="wlt-form wallet-form wlt-form--tight" id="walletRestoreForm">
             <div class="wlt-field">
               <label for="walletRestoreWords">Restore from phrase</label>
               <input id="walletRestoreWords" type="text" placeholder="word1 word2 … word24" />
@@ -290,7 +291,7 @@
         <h2>RupeeCoin — No one owns or controls it.</h2>
       </div>
       <section class="wlt-panel wlt-blueprint" id="rupeecoinSection">
-        <div class="wlt-layer-grid" style="margin-bottom:2rem">
+        <div class="wlt-layer-grid wlt-layer-grid--gap-bottom">
           <div><span>01</span><strong>Open Registration</strong><p>Anyone can create a wallet. No founder, no gatekeeper. You get 1,000 RC on creation.</p></div>
           <div><span>02</span><strong>Fixed Supply</strong><p>21,000,000 RC maximum — same as Bitcoin. Each new wallet gets a 1,000 RC genesis grant until the cap is reached.</p></div>
           <div><span>03</span><strong>Peer-to-Peer</strong><p>Send RC directly to any username. No intermediary, no admin approval needed.</p></div>
@@ -301,10 +302,10 @@
         </div>
 
         <!-- RC Quick Connect -->
-        <div id="rcConnectPanel" style="max-width:480px">
+        <div id="rcConnectPanel" class="wlt-rc-connect">
           <p class="wlt-kicker">Quick Connect</p>
-          <h3 style="margin:0 0 .5rem;font-size:1.1rem;font-weight:700">Use your RC Wallet</h3>
-          <p style="font-size:.85rem;opacity:.65;margin-bottom:1rem">RupeeCoin runs on your local network. Connect below or open the full app.</p>
+          <h3 class="wlt-rc-heading">Use your RC Wallet</h3>
+          <p class="wlt-rc-desc">RupeeCoin runs on your local network. Connect below or open the full app.</p>
           <div id="rcLoginForm">
             <div class="wlt-field">
               <label for="rcEndpoint">RC Server</label>
@@ -324,7 +325,7 @@
             </div>
           </div>
           <div id="rcDashboard" style="display:none">
-            <div class="wlt-stats" style="margin:0 0 1rem">
+            <div class="wlt-stats wlt-stats--tight">
               <div class="wlt-stat"><span>RC Balance</span><strong id="rcBalance">—</strong></div>
               <div class="wlt-stat"><span>Pending Req</span><strong id="rcPending">—</strong></div>
               <div class="wlt-stat"><span>Block Height</span><strong id="rcBlockHeight">—</strong></div>
@@ -349,7 +350,7 @@
               </div>
               <button class="wlt-submit" type="submit">Send RC</button>
             </form>
-            <button class="wlt-btn" style="margin-top:.75rem" onclick="rcLogout()">Disconnect</button>
+            <button class="wlt-btn wlt-mt-sm" onclick="rcLogout()">Disconnect</button>
           </div>
           <p id="rcConnectStatus" class="wallet-status" role="status"></p>
         </div>
@@ -387,12 +388,12 @@
 
   <footer class="site-footer" id="site-footer"></footer>
 
-  <script src="/js/hi-storage.js?v=20260917"></script>
-  <script src="/js/hi-identity-crypto.js?v=20260917"></script>
-  <script src="/js/hdi.js?v=20260917"></script>
-  <script src="/js/hi-wallet.js?v=20260917"></script>
-  <script src="/js/footer.js?v=20260917"></script>
-  <script src="/js/effects.js?v=20260917"></script>
+  <script src="/js/hi-storage.js?v=20260917e"></script>
+  <script src="/js/hi-identity-crypto.js?v=20260917e"></script>
+  <script src="/js/hdi.js?v=20260917e"></script>
+  <script src="/js/hi-wallet.js?v=20260917e"></script>
+  <script src="/js/footer.js?v=20260917e"></script>
+  <script src="/js/effects.js?v=20260917e"></script>
   <script>
   "use strict";
 

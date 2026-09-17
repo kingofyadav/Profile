@@ -14,7 +14,8 @@ const _now    = new Date();
 const _pad    = n => String(n).padStart(2, "0");
 const ASSET_V = `${_now.getFullYear()}${_pad(_now.getMonth() + 1)}${_pad(_now.getDate())}`;
 
-const CSS_LINKS = `  <link rel="stylesheet" href="/css/base.css?v=${ASSET_V}" />
+const CSS_LINKS = `  <link rel="stylesheet" href="/css/brand-tokens.css?v=${ASSET_V}" />
+  <link rel="stylesheet" href="/css/base.css?v=${ASSET_V}" />
   <link rel="stylesheet" href="/css/components.css?v=${ASSET_V}" />
   <link rel="stylesheet" href="/css/layout.css?v=${ASSET_V}" />
   <link rel="stylesheet" href="/css/blog-post.css?v=${ASSET_V}" />`;

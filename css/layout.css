@@ -359,12 +359,9 @@ body.theme-dark .footer-pro-strip span {
 ====================================================== */
 
 @media (max-width: 640px) {
-  .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding-bottom: 18px;
-  }
-
+  /* .footer-inner's column/gap/padding cascade is owned by components.css
+     (900px/540px steps) — only the .footer-right divider styling below
+     is specific to this file. */
   .footer-right {
     justify-content: flex-start;
     text-align: left;

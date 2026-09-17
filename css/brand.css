@@ -161,7 +161,7 @@ transparent 70%
 );
 
 filter:blur(50px);
-z-index:-1;
+z-index:var(--z-below);
 }
 
 .brand-hero::after{
@@ -181,7 +181,7 @@ transparent 70%
 );
 
 filter:blur(60px);
-z-index:-1;
+z-index:var(--z-below);
 }
 
 
@@ -232,6 +232,9 @@ font-size:14px;
 font-weight:600;
 padding:10px 14px;
 border-radius:8px;
+min-height:44px;
+display:inline-flex;
+align-items:center;
 
 transition:all .25s ease;
 opacity:.85;
@@ -528,6 +531,14 @@ color:var(--brand-green);
 background:rgba(0,0,0,0.03);
 }
 
+@media (max-width:640px){
+.brand-table{
+display:block;
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+}
+}
+
 
 
 /* ======================================================
@@ -771,6 +782,11 @@ border-bottom:none;
 @media (prefers-reduced-motion: reduce) {
   .brand-hero-content,
   .brand-hero-media { animation: none; }
+  .brand-hero .hero-content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
   .hero-btn,
   .brand-card,
   .brand-hero-media img { transition: none; }

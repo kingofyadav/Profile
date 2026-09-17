@@ -32,7 +32,7 @@
 .hi-personal-hero-main,
 .hi-personal-hero-rail {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 .hi-personal-hero-main {
@@ -677,22 +677,34 @@ body.theme-light .hi-world-card {
 }
 
 .hi-dot {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hi-dot::before {
+  content: "";
   width: 13px;
   height: 13px;
   border-radius: 50%;
   border: 1.5px solid rgba(4,106,56,0.3);
   background: transparent;
-  cursor: pointer;
-  padding: 0;
   transition: background 0.16s ease, border-color 0.16s ease, transform 0.14s ease;
 }
 
-.hi-dot.active {
+.hi-dot.active::before {
   background: var(--brand-green);
   border-color: var(--brand-green);
 }
 
-.hi-dot:hover {
+.hi-dot:hover::before {
   border-color: var(--brand-green);
   transform: scale(1.2);
 }
@@ -745,10 +757,13 @@ body.theme-light .hi-task-item:hover { background: rgba(0,0,0,0.04); }
 }
 
 .hi-task-check {
-  width: 20px;
-  height: 20px;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 6px;
-  border: 1.5px solid rgba(4,106,56,0.4);
+  border: none;
   background: transparent;
   cursor: pointer;
   font-size: 0.7rem;
@@ -757,16 +772,26 @@ body.theme-light .hi-task-item:hover { background: rgba(0,0,0,0.04); }
   justify-content: center;
   color: #fff;
   flex-shrink: 0;
-  transition: background 0.16s ease, border-color 0.16s ease;
   padding: 0;
 }
 
-.hi-task-item.done .hi-task-check {
+.hi-task-check::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(4,106,56,0.4);
+  background: transparent;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.hi-task-item.done .hi-task-check::before {
   background: var(--brand-green);
   border-color: var(--brand-green);
 }
 
-.hi-task-check:hover {
+.hi-task-check:hover::before {
   border-color: var(--brand-green);
   background: rgba(4,106,56,0.12);
 }
@@ -791,6 +816,10 @@ body.theme-light .hi-task-item:hover { background: rgba(0,0,0,0.04); }
 
 .hi-task-item:hover .hi-task-delete { opacity: 0.3; }
 .hi-task-delete:hover { opacity: 1 !important; color: #ff4d4d; background: rgba(255,77,77,0.1); }
+
+@media (max-width: 768px), (hover: none) {
+  .hi-task-delete { opacity: 1; }
+}
 
 .hi-task-empty {
   font-size: 0.8rem;
@@ -834,8 +863,8 @@ body.theme-light .hi-task-form input {
 }
 
 .hi-task-form button[type="submit"] {
-  width: 34px;
-  height: 34px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 10px;
   border: none;
   background: var(--brand-green);
@@ -955,7 +984,7 @@ body.theme-light .hi-task-form input {
   gap: 1px;
   box-shadow: 0 8px 24px rgba(4,106,56,0.45);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  z-index: 500;
+  z-index: var(--z-sticky);
   color: #fff;
 }
 
@@ -987,7 +1016,7 @@ body.theme-light .hi-task-form input {
   width: 280px;
   padding: 20px;
   border-radius: 18px;
-  z-index: 499;
+  z-index: var(--z-raised);
   box-shadow: 0 12px 40px rgba(0,0,0,0.3);
 }
 
@@ -1075,7 +1104,7 @@ body.theme-light .hi-ai-placeholder {
   inset: 0;
   background: rgba(0,0,0,0.72);
   backdrop-filter: blur(6px);
-  z-index: 3000;
+  z-index: var(--z-top);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1722,7 +1751,7 @@ body.theme-light .hi-priority-select option {
   flex-shrink: 0;
 }
 
-.hi-prio-high .hi-task-check {
+.hi-prio-high .hi-task-check::before {
   border-color: rgba(255,103,31,0.5);
 }
 
@@ -1897,7 +1926,7 @@ body.theme-light .hi-event-row:hover { background: rgba(0,0,0,.04); }
 
 .hi-chat-backdrop {
   position: fixed; inset: 0; background: rgba(0,0,0,.5);
-  backdrop-filter: blur(3px); z-index: 1998;
+  backdrop-filter: blur(3px); z-index: var(--z-overlay);
 }
 .hi-chat-backdrop[hidden] { display: none; }
 
@@ -1905,7 +1934,7 @@ body.theme-light .hi-event-row:hover { background: rgba(0,0,0,.04); }
   position: fixed;
   top: 0; right: 0; bottom: 0;
   width: 420px; max-width: 100dvw;
-  z-index: 1999;
+  z-index: var(--z-modal);
   display: flex; flex-direction: column;
   transform: translateX(100%);
   transition: transform .3s cubic-bezier(.22,1,.36,1);
@@ -2009,10 +2038,14 @@ body.theme-light .hi-chat-bubble.assistant .hi-bubble-content {
   display: flex; gap: 5px; align-items: center; padding: 13px 16px;
 }
 .hi-typing-indicator .hi-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: #666;
+  width: 7px; height: 7px; padding: 0; border-radius: 50%; background: #666;
   animation: hiTypingBounce .9s infinite ease-in-out;
   border: none; /* override .hi-dot button reset */
   cursor: default;
+  display: inline-block;
+}
+.hi-typing-indicator .hi-dot::before {
+  content: none; /* the mood-picker hit-area pseudo doesn't apply here */
 }
 .hi-typing-indicator .hi-dot:nth-child(2) { animation-delay: .15s; }
 .hi-typing-indicator .hi-dot:nth-child(3) { animation-delay: .3s; }
@@ -2145,8 +2178,8 @@ body.theme-light .hi-chat-header {
 
 .hi-chat-action-btn,
 .hi-chat-close-btn {
-  width: 36px;
-  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2318,7 +2351,7 @@ body.theme-light .hi-chat-input {
 .hi-license-hero-brand,
 .hi-license-hero-grid {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 .hi-license-hero-brand {
@@ -3354,7 +3387,7 @@ body.theme-light .hi-hdi-claims {
   }
   .hi-chat-header { padding: 16px 18px; }
   .hi-chat-messages { padding: 18px 16px; }
-  .hi-chat-form { padding: 12px 14px 16px; }
+  .hi-chat-form { padding: 12px 14px max(16px, env(safe-area-inset-bottom)); }
   .hi-people-grid { grid-template-columns: 1fr; }
   .hi-claim-row { grid-template-columns: 1fr; }
   .hi-cert-footer { grid-template-columns: 1fr 1fr; }
@@ -3480,6 +3513,182 @@ body.theme-light .hi-hdi-claims {
   .hi-habit-btn:hover,
   .hi-proj-card:hover,
   .hi-btn-primary:hover { transform: none; }
-  .hi-dot { transition: none; }
-  .hi-dot:hover { transform: none; }
+  .hi-dot::before { transition: none; }
+  .hi-dot:hover::before { transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   hi-protect page (pages/hi-protect.html) — extracted inline styles
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Alerts tab count badge */
+.hi-alerts-count-badge {
+  display: none;
+  background: var(--brand-orange);
+  color: #fff;
+  border-radius: 99px;
+  font-size: 0.6rem;
+  padding: 1px 5px;
+  margin-left: 4px;
+}
+
+/* Panel header row: title/toolbar on the left, primary action on the right */
+.hi-panel-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Section-head label with zero bottom margin (sits inline with a toolbar) */
+.hi-sh-flush { margin-bottom: 0; }
+/* Section-head label with a small bottom margin (stands alone above content) */
+.hi-sh-tight { margin-bottom: 0.6rem; }
+
+/* Cluster of a section-head label plus its filter buttons */
+.hi-filter-cluster { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.hi-filter-btn-group { display: flex; gap: 0.4rem; }
+
+/* Generic wrapping button rows */
+.hi-btn-row { display: flex; gap: 0.5rem; }
+.hi-btn-row-wrap { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.hi-btn-row-center { display: flex; gap: 0.5rem; align-items: center; }
+
+/* Report-a-repost form section */
+.hi-report-section { margin-top: 2.5rem; }
+.hi-report-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+/* Content wrappers capped at a readable form/card width */
+.hi-narrow-panel { max-width: 560px; }
+.hi-detect-intro { font-size: 0.82rem; color: rgba(255,255,255,.45); margin-bottom: 1.25rem; max-width: 560px; }
+
+/* Detect-repost upload progress row (default hidden; JS toggles display) */
+.hi-detect-progress {
+  display: none;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,.5);
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Social verify: add-account / verify-instructions inline forms (default hidden) */
+.hi-inline-form-panel { display: none; margin-top: 1.5rem; max-width: 480px; }
+.hi-verify-instructions-text { font-size: 0.78rem; color: rgba(255,255,255,.45); margin: 0.6rem 0 1rem; }
+.hi-verify-check-result { display: none; margin-top: 0.75rem; font-size: 0.8rem; }
+
+/* Protected-content empty/filtered states */
+.hi-show-all-btn { margin-left: 0.5rem; }
+.hi-empty-cta { margin-top: 0.75rem; display: inline-flex; }
+
+/* Alert card layout */
+.hi-alert-body { flex: 1; min-width: 0; }
+.hi-alert-meta-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; flex-wrap: wrap; }
+.hi-alert-platform-label { font-size: 0.75rem; color: rgba(255,255,255,.5); }
+.hi-alert-date { font-size: 0.7rem; color: rgba(255,255,255,.3); }
+.hi-alert-license-id { margin-bottom: 0.35rem; }
+.hi-alert-url-wrap { font-size: 0.78rem; color: rgba(255,255,255,.55); word-break: break-all; margin-bottom: 0.6rem; }
+.hi-alert-url-link { color: var(--brand-orange); text-decoration: none; }
+
+/* Confidence bar variants + shared caption */
+.hi-conf-bar-narrow { max-width: 260px; }
+.hi-conf-bar-spaced { max-width: 260px; margin-bottom: 0.6rem; }
+.hi-conf-caption { font-size: 0.65rem; color: rgba(255,255,255,.35); }
+
+/* Card action columns (alerts + social cards) */
+.hi-actions-col { flex-direction: column; align-items: flex-end; }
+
+/* Detect-repost result: watermark banner */
+.hi-watermark-found-wrap { margin-bottom: 0.75rem; }
+.hi-badge-sm { font-size: 0.65rem; }
+.hi-watermark-license-label { font-size: 0.78rem; color: rgba(255,255,255,.6); margin-left: 0.5rem; }
+
+/* Detect-repost result: match list */
+.hi-match-count-warn { font-weight: 700; font-size: 0.88rem; color: var(--brand-orange); margin-bottom: 0.75rem; }
+.hi-match-card {
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255,255,255,.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.hi-match-card-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
+.hi-match-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.hi-match-byline { font-size: 0.72rem; color: rgba(255,255,255,.4); margin-bottom: 0.5rem; }
+
+/* Detect-repost result: clean (no match) state */
+.hi-clean-result-head { font-weight: 700; font-size: 0.88rem; color: var(--brand-green); margin-bottom: 0.5rem; }
+.hi-clean-result-sub { font-size: 0.78rem; color: rgba(255,255,255,.45); }
+.hi-hash-spaced { margin-top: 0.75rem; }
+.hi-error-text { color: #ff6b6b; font-size: 0.82rem; }
+
+/* Social verify: linked account rows */
+.hi-social-row-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+.hi-social-platform-name { font-weight: 700; font-size: 0.88rem; }
+.hi-social-url { font-size: 0.76rem; color: rgba(255,255,255,.45); word-break: break-all; }
+.hi-link-plain { color: inherit; }
+.hi-social-verify-hint { margin-top: 0.5rem; }
+.hi-verify-code-inline {
+  font-size: 0.72rem;
+  background: rgba(4,106,56,.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: var(--brand-green);
+}
+.hi-verify-success-text { color: var(--brand-green); font-weight: 700; }
+.hi-verify-fail-text { color: var(--brand-orange); font-weight: 700; }
+
+/* ══════════════════════════════════════════════════════════════════════
+   hi-license page (pages/hi-license.html) — extracted inline styles
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Vault stat tile (clickable, links to /pages/vault.html) */
+.hi-vault-stat-clickable { cursor: pointer; }
+.hi-vault-stat-num { font-size: 1rem; }
+
+/* Stale-backup warning banner (default hidden; JS reveals it) */
+.hi-vault-warn-banner {
+  display: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem,4vw,2.5rem);
+}
+.hi-vault-warn-link {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,103,31,.35);
+  background: rgba(255,103,31,.07);
+  text-decoration: none;
+  font-size: .8rem;
+  color: inherit;
+  margin-bottom: 1rem;
+}
+.hi-vault-warn-icon { font-size: 1.2rem; }
+.hi-vault-warn-msg { flex: 1; }
+.hi-vault-warn-cta { color: var(--brand-orange); font-weight: 700; white-space: nowrap; }
+
+/* Claim-new-content form: media file input + fingerprint status */
+.hi-claim-media-input {
+  width: 100%;
+  padding: .45rem .7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.04);
+  color: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+}
+.hi-phash-status { font-size: .71rem; color: rgba(255,255,255,.35); margin-top: .3rem; min-height: 1.1em; }
+
+/* Seed-blog-licenses section */
+.hi-seed-blog-desc { font-size: 0.82rem; color: rgba(255,255,255,.5); margin-bottom: 1rem; }
+.hi-seed-status { font-size: 0.82rem; margin-left: 0.75rem; }
+
+/* Backup & restore section: sync status needs slightly tighter spacing here */
+.hi-sync-status-backup { margin-top: 0.75rem; }

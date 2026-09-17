@@ -33,7 +33,7 @@
 .gallery-hero .hero-content,
 .gallery-hero-preview {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 
 .gallery-hero h1 {
@@ -356,7 +356,7 @@
 .gallery-lightbox-close,
 .gallery-lightbox-nav {
   position: absolute;
-  z-index: 2;
+  z-index: var(--z-raised);
   min-width: 44px;
   min-height: 42px;
   border: 1px solid rgba(255, 255, 255, .18);
@@ -427,6 +427,14 @@ body.theme-light .gallery-hero::before {
   .gallery-lightbox-next {
     right: 10px;
   }
+
+  /* .gallery-lightbox-inner is stacked (image over panel) at this
+     breakpoint, so top:50% of the whole inner box no longer centers
+     on the image. Anchor to half the image's own displayed height
+     instead, so the arrows stay overlaid on the image. */
+  .gallery-lightbox-nav {
+    top: calc(min(92vh, 800px) / 2);
+  }
 }
 
 @media (max-width: 640px) {
@@ -476,5 +484,11 @@ body.theme-light .gallery-hero::before {
   .gallery-lightbox-close {
     top: 8px;
     right: 8px;
+  }
+
+  /* Image height changes to 68vh at this breakpoint; keep the arrows
+     centered on the image, not the stacked inner container. */
+  .gallery-lightbox-nav {
+    top: 34vh;
   }
 }
