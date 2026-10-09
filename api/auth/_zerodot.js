@@ -69,9 +69,17 @@ async function exchangeCode({ code, verifier, redirectUri }) {
     code_verifier: verifier,
     redirect_uri: redirectUri,
   });
+  // Send client auth both ways (HTTP Basic + body params) — some OAuth2
+  // server implementations only honor one of the two (RFC 6749 §2.3.1
+  // prefers Basic; others expect client_secret_post). Harmless to send both.
+  const basicAuth = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
   const resp = await fetch(TOKEN_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+      Authorization: `Basic ${basicAuth}`,
+    },
     body,
     signal: AbortSignal.timeout(15_000),
   });
