@@ -75,9 +75,15 @@ async function exchangeCode({ code, verifier, redirectUri }) {
     body,
     signal: AbortSignal.timeout(15_000),
   });
-  const data = await resp.json().catch(() => ({}));
+  const raw = await resp.text();
+  let data;
+  try { data = JSON.parse(raw); } catch { data = {}; }
   if (!resp.ok || !data.access_token) {
-    const err = new Error(data.error || `Token exchange failed (${resp.status})`);
+    console.error(JSON.stringify({
+      level: "error", event: "zerodot_token_exchange_failed",
+      status: resp.status, body: raw.slice(0, 500),
+    }));
+    const err = new Error(data.error_description || data.error || `Token exchange failed (${resp.status})`);
     err.status = 502;
     throw err;
   }

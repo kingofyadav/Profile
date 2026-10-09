@@ -173,7 +173,8 @@ describe("GET /auth/0dot/callback", () => {
     global.fetch = jest.fn(async (url, opts) => {
       calls.push({ url: String(url), opts });
       if (String(url).endsWith("/api/oauth/token")) {
-        return { ok: true, status: 200, json: async () => ({ access_token: "AT", refresh_token: "RT", token_type: "Bearer", expires_in: 3600, scope: "profile:read" }) };
+        const body = { access_token: "AT", refresh_token: "RT", token_type: "Bearer", expires_in: 3600, scope: "profile:read" };
+        return { ok: true, status: 200, text: async () => JSON.stringify(body) };
       }
       if (String(url).endsWith("/api/v1/users/me")) {
         return { ok: true, status: 200, json: async () => ({ id: "usr_1", username: "amit", displayName: "Amit Ku Yadav", avatarUrl: "https://0dot.in/a.png" }) };
@@ -207,7 +208,7 @@ describe("GET /auth/0dot/callback", () => {
   });
 
   it("token exchange failure -> login error, no session", async () => {
-    global.fetch = jest.fn(async () => ({ ok: false, status: 400, json: async () => ({ error: "invalid_grant" }) }));
+    global.fetch = jest.fn(async () => ({ ok: false, status: 400, text: async () => JSON.stringify({ error: "invalid_grant" }) }));
     const res = makeRes();
     await callbackHandler(makeReq("GET", {
       query: { code: "bad", state: "STATE123" },
