@@ -1,6 +1,10 @@
 (function () {
   "use strict";
 
+  // Tor onion visitors: never auto-open a live cross-origin connection to
+  // jarvis.kingofyadav.in. Keeps the onion mirror from phoning home per page view.
+  if (/\.onion$/i.test(location.hostname)) return;
+
   // Top-level error boundary — ensures a broken widget never crashes the host page
   window.addEventListener("error", function (e) {
     if (e && e.filename && e.filename.indexOf("jarvis-widget") !== -1) {

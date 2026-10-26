@@ -176,3 +176,45 @@ Current security headers (set in `vercel.json`):
 | `Content-Security-Policy` | nonce-based via Edge Middleware |
 
 Run `npx observatory-cli https://kingofyadav.in` quarterly to re-score headers.
+
+---
+
+## Tor Hidden Service (Onion Mirror)
+
+The site is also reachable over Tor at:
+
+```
+http://dotrta7xpeqlaf4ltswlqo4mdgmjmbngm7krktbb75gctssnefqugsad.onion
+```
+
+### Architecture
+
+```
+Tor Browser ──(Tor circuit)──> HiddenServiceDir /var/lib/tor/profile-onion/
+                                  (v3 onion, HiddenServicePort 80 -> 127.0.0.1:3002)
+                                       │
+                                       ▼
+                        systemd --user: profile-vercel-dev.service
+                        `vercel dev --listen 127.0.0.1:3002`
+                        (full local replica: static pages + api/* + vercel.json rewrites)
+```
+
+No nginx or reverse proxy sits between Tor and the app — Tor forwards directly to the
+local `vercel dev` process. This is a full dynamic mirror (API routes included), not a
+static-only copy, so it only ever needs this machine to be on; it has no dependency on
+the live Vercel/Railway deployment.
+
+### Operational notes
+
+- **Service**: `systemctl --user status profile-vercel-dev.service` / `journalctl --user -u profile-vercel-dev -f`
+- **Logs**: `logs/vercel-dev.log` (gitignored). Install `/etc/logrotate.d/profile-vercel-dev` to cap growth — see repo scratchpad or ask for the config again if lost.
+- **Tor**: `sudo systemctl status tor` · config in `/etc/tor/torrc` (`ClientOnly 1`, stream isolation, obfs4 scaffold, no exit traffic).
+- **Binding**: the dev server binds `127.0.0.1:3002` only — never `0.0.0.0`. Binding to all interfaces would make the exact same content reachable over the LAN, unauthenticated, and would let anyone who finds that port correlate the onion content with this machine's real network address, defeating the point of the hidden service. Keep `--listen 127.0.0.1:3002` in the systemd unit if this is ever touched.
+- **Sandboxing**: `~/.config/systemd/user/profile-vercel-dev.service` runs with `NoNewPrivileges`, `ProtectSystem=strict`, `ProtectHome=read-only` (+ explicit `ReadWritePaths`), `PrivateTmp`, `RestrictSUIDSGID`, `RestrictRealtime`, `RemoveIPC`. Several further `Protect*`/capability-bounding directives were tried and reverted — systemd `--user` units fail with `status=218/CAPABILITIES` when asked to drop certain implied capabilities without root, so this is the safe ceiling for a non-root user unit.
+- **Rotating the address**: delete `/var/lib/tor/profile-onion/` (as root), restart `tor`, re-read the new `hostname` file, update it here and in `vercel.json`'s `Onion-Location` header.
+
+### Trust/exposure decisions made for this mirror (2026-10-26)
+
+- **Trackers**: `api-static/jarvis-widget.js` early-returns for any `location.hostname` ending in `.onion`, so the live chat widget never opens its cross-origin WebSocket to `jarvis.kingofyadav.in` for Tor visitors. (Cloudflare Insights/Google APIs in the CSP allow-list are not actually embedded anywhere in the codebase — likely injected by Cloudflare at the clearnet edge — so they don't reach the onion mirror at all.)
+- **API parity**: deliberately kept full — wallet/auth/payment routes under `api/` are reachable over the onion address exactly as on the live site, using whatever credentials are in `.env.local`. If those are ever swapped for production secrets, revisit whether anonymous Tor traffic should still reach `api/wallet/*`, `api/auth/*`, and `api/upi-payment.js` unauthenticated.
+- **Onion-Location**: the live `vercel.json` sends this header site-wide so Tor Browser visitors on the clearnet domain get the one-click banner to switch to the `.onion` address (same pattern as nytimes.com/propublica.org).
