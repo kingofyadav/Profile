@@ -6,7 +6,7 @@
    Author: Amit Ku Yadav
 ====================================================== */
 
-const VERSION = "v20261028-1723";
+const VERSION = "v20261029-0840";
 const STATIC_CACHE = `ak-static-${VERSION}`;
 const DYNAMIC_CACHE = `ak-dynamic-${VERSION}`;
 const MAX_DYNAMIC_ITEMS = 80;
